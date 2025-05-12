@@ -6,10 +6,10 @@ type CategoryItemProps = {
 
 const CategoryItem = ({ name, slug }: CategoryItemProps) => {
   return (
-    <div className="flex w-full flex-col justify-center gap-2 rounded-lg bg-white p-4 shadow-md">
-      <h3>{name}</h3>
-      <p>{slug}</p>
-      <img src="https://placehold.co/20x20" alt={name} />
+    <div className="flex w-full flex-col relative gap-1 rounded-lg bg-white p-3">
+      <h3 className="font-semibold">{name}</h3>
+      <p className="font-semibold text-gray-500">{slug}</p>
+      <img className="absolute bottom-3 right-3" src="https://placehold.co/40x40" alt={name} />
     </div>
   );
 };
