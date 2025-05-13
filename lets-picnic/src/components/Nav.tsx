@@ -29,9 +29,6 @@ const Nav = () => {
             </div>
         </nav>
     )
-    //   #064c4e
-    // #f3f5f4
-    // #edbc4a
 }
 
 export default Nav
