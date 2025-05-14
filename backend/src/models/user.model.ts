@@ -1,4 +1,3 @@
-import { error } from 'console';
 import { createClient } from '../database/dbClient'
 import { User } from "../types/user";
 
@@ -61,7 +60,7 @@ const createUser = async (newUser: Omit<User,  'id' | 'createdAt' | 'updatedAt'>
       [email]
     )
     if (existUser.rows[0]) {
-      return error({ error: "User is already registered" });
+      return undefined;
     }
 
     const result = await client.query(

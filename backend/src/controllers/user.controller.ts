@@ -47,10 +47,15 @@ const addUser = async (req: Request, res: Response) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await userModel.createUser({firstName, lastName, email, hashedPassword, role});
 
+    if(!user){
+      res.status(400).json({ message: "User is already existed" })
+      return
+    }
+
     res.status(201).json(user);
   } catch (err) {
     console.error('Error in addUser:', err);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Failed to add user' });
   }
 };
 
