@@ -4,7 +4,7 @@ import cookieSession from 'cookie-session'
 import cors from 'cors'
 dotenv.config()
 import { connectDb } from './database/dbClient'
-// import userRouter from './routes/user.routes'
+import categoryRouter from './routes/category.routes'
 
 // Create server
 const app = express()
@@ -28,7 +28,7 @@ app.use(cookieSession({
 }))
 
 // Routes
-// app.use('/user', userRouter);
+app.use('/category', categoryRouter);
 
 // Fallback
 app.use((req: Request, res: Response) => {
