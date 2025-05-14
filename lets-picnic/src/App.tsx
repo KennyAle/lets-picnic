@@ -1,5 +1,6 @@
 import Banner from "./components/Banner";
 import Categories from "./components/Categories";
+import DeliverAndMembership from "./components/DeliverAndMembership";
 import Nav from "./components/Nav";
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
       <Nav />
       <Banner />
       <Categories />
-
+      <DeliverAndMembership />
     </main>
   );
 }
