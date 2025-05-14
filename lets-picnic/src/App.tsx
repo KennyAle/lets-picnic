@@ -1,13 +1,15 @@
 import Categories from "./components/Categories";
 import Experience from "./components/Experience";
+import Footer from "./components/Footer";
 import ProductsList from "./components/ProductsList";
 
 function App() {
   return (
     <main className="bg-gray-100">
-      <Experience />
       <Categories />
       <ProductsList />
+      <Experience />
+      <Footer />
     </main>
   );
 }
