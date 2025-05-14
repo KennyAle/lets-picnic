@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import userModel from "../models/user.model";
 import bcrypt from "bcrypt";
+import { User } from "../types/user";
 
 // get all users
 const getAllUsers = async (req: Request, res: Response) => {
@@ -15,7 +16,7 @@ const getAllUsers = async (req: Request, res: Response) => {
 
 // get user by id
 const getUserById = async (req: Request, res: Response) => {
-  const id = parseInt(req.params.userId)
+  const id = parseInt(req.params.userId, 10)
   if (isNaN(id)) {
     res.status(400).json({ error: "Invalid user ID. Must be a number." })
     return
@@ -33,18 +34,18 @@ const getUserById = async (req: Request, res: Response) => {
   }
 }
 
-//add new user
+// add new user
 const addUser = async (req: Request, res: Response) => {
-  const { firstname, lastname, email, password } = req.body;
+  const { firstName, lastName, email, password, role} = req.body;
 
-  if (!firstname || !lastname || !email || !password) {
+  if (!firstName || !lastName || !email || !password || !role) {
     res.status(400).json({ message: 'Missing required fields' });
     return;
   }
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await userModel.createUser(firstname, lastname, email, hashedPassword);
+    const user = await userModel.createUser({firstName, lastName, email, hashedPassword, role});
 
     res.status(201).json(user);
   } catch (err) {
@@ -54,16 +55,16 @@ const addUser = async (req: Request, res: Response) => {
 };
 
 // edit user
-const editUser = async (req: Request, res: Response) => {
+const editUser = async (req: Request<{ userId: string }, {}, Partial<User>>, res: Response) => {
   try {
-    const id = parseInt(req.params.userId)
+    const id = parseInt(req.params.userId, 10)
     if (isNaN(id)) {
       res.status(400).json({ message: "Invalid user ID" })
       return
     }
 
-    const { firstname, lastname, email } = req.body
-    const user = await userModel.editUser(id, firstname, lastname, email)
+    const { firstName, lastName, email, role } = req.body
+    const user = await userModel.editUser(id, {firstName, lastName, email, role})
 
     if (!user) {
       res.status(404).json({ message: "User not found" })
@@ -83,7 +84,7 @@ const deleteUser = async (req: Request, res: Response) => {
   const id = parseInt(req.params.userId, 10)
   try {
     const user = await userModel.deleteUser(id)
-    res.status(200).json(user)
+    res.status(200).json({ message: "User deleted" })
   } catch (err) {
     console.error(err)
     res.status(500).json({message: "Unable to delete user"})

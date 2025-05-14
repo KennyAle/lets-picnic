@@ -1,5 +1,6 @@
-import { Result } from 'pg'
+import { error } from 'console';
 import { createClient } from '../database/dbClient'
+import { User } from "../types/user";
 
 // fetch all user
 const getAllUsers = async () => {
@@ -49,22 +50,25 @@ const getUserByEmail = async (email: string) => {
   }
 }
 
-
 // add new user
-const createUser = async (
-  firstname: string,
-  lastname: string,
-  email: string,
-  password: string,
-) => {
+const createUser = async (newUser: Omit<User,  'id' | 'createdAt' | 'updatedAt'>) => {
+  const { firstName, lastName, email, hashedPassword, role } = newUser
   const client = createClient()
   try {
     await client.connect()
+    const existUser = await client.query(
+      `SELECT * FROM "user" WHERE email = $1`,
+      [email]
+    )
+    if (existUser.rows[0]) {
+      return error({ error: "User is already registered" });
+    }
+
     const result = await client.query(
-      `INSERT INTO "user" (firstname, lastname, email, password)
-       VALUES ($1, $2, $3, $4)
+      `INSERT INTO "user" (firstname, lastname, email, password, role)
+       VALUES ($1, $2, $3, $4, $5)
        RETURNING *`,
-      [firstname, lastname, email, password || null]
+      [firstName, lastName, email, hashedPassword, role]
     )
     return result.rows[0]
   } catch (err) {
@@ -75,17 +79,27 @@ const createUser = async (
   }
 }
 
-// edit user
-const editUser = async (  
-  id: number,
-  firstname: string,
-  lastname: string,
-  email: string
-) => {
+// edit user (except password)
+const editUser = async (id: number, updatedUser: Partial<User>) => {
+  const findUser = await getUserById(id);
+  if(!findUser) {
+    return undefined;
+  }
+
   const client = createClient()
   try {
     await client.connect()
-    const result = await client.query(`UPDATE "user" SET firstname = $1, lastname = $2, email = $3 WHERE id = $4 RETURNING *`, [firstname, lastname, email, id])
+
+    const updateData = {
+      firstName: updatedUser.firstName ?? findUser.firstname,
+      lastName: updatedUser.lastName ?? findUser.lastname,
+      email: updatedUser.email ?? findUser.email,
+      role: updatedUser.role ?? findUser.role
+    }
+    const result = await client.query(
+      `UPDATE "user" SET firstname = $1, lastname = $2, email = $3, role = $4 WHERE id = $5 RETURNING *`,
+      [updateData.firstName, updateData.lastName, updateData.email, updateData.role, id]
+    )
     return result.rows[0] || null
   } catch (err) {
     console.error("Error editing user:", err)
