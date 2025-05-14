@@ -72,7 +72,7 @@ const deleteCategoryById = async (req: Request<{ categoryId: string }>, res: Res
     res.status(200).json({ message: "Category deleted" })
   } catch (err) {
     console.error(err)
-    res.status(500).json({ message: "Failed to delete employee" })
+    res.status(500).json({ message: "Failed to delete category" })
   }
 }
 
