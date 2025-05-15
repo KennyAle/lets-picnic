@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import productModel from "../models/product.model";
 import { Product } from "../types/product";
+import { error } from "console";
 
 // get all products
 const getAllProducts = async (req: Request, res: Response) => {
@@ -43,6 +44,21 @@ const getProductByName = async (req: Request, res: Response) => {
     res.status(200).json(product)
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch product by name" });
+  }
+}
+
+// get products by category id
+const getProductsByCategoryId = async (req: Request, res: Response) => {
+  const categoryId = parseInt(req.params.categoryId)
+  try {
+    const products = await productModel.getProductsByCategoryId(categoryId)
+    if(!products) {
+      res.status(404).json({ error: "Products not found" })
+      return
+    }
+    res.status(200).json(products)
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch products by category id" })
   }
 }
 
@@ -101,6 +117,7 @@ export default {
   getAllProducts,
   getProductById,
   getProductByName,
+  getProductsByCategoryId,
   addProduct,
   editProduct,
   deleteProduct

@@ -62,6 +62,26 @@ const getProductByName = async (productName: string) => {
   }
 }
 
+// get products by group category
+const getProductsByCategoryId = async (categoryId: number) => {
+  const client = createClient()
+  try {
+    await client.connect()
+    const result = await client.query(
+      `SELECT product.*, category.category_name
+       FROM "product" AS product
+       LEFT JOIN "category" AS category
+       ON product.category_id = category.id
+       WHERE product.category_id = $1`,[categoryId])
+    return result.rows
+  } catch (err) {
+    console.error(err)
+    throw err
+  } finally {
+    await client.end()
+  }
+}
+
 // create product 
 const createProduct = async (newProduct: Omit<Product, 'id'| 'createdAt' | 'updatedAt'>) => {
   const { productName, categoryId, price, image, description } = newProduct
@@ -125,6 +145,7 @@ export default {
   getAllProducts,
   getProductById,
   getProductByName,
+  getProductsByCategoryId,
   createProduct,
   editProduct,
   deleteProduct
