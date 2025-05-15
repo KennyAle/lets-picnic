@@ -2,8 +2,6 @@ import CategoryItem from "./CategoryItem";
 import categories from "../assets/categories.json";
 
 const Categories = () => {
-  console.log(categories);
-
   return (
     <div className="flex gap-5">
       {categories.map((category, index) =>

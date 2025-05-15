@@ -3,7 +3,7 @@ const Info = [
   { name: "Gift Vouchers", image: "https://placehold.co/150x200" },
   { name: "Present a Gift card", image: "https://placehold.co/150x200" },
   { name: "Pay your Invoice", image: "https://placehold.co/150x200" },
-  { name: "Pay your Invoice", image: "https://placehold.co/150x200" },
+  { name: "Pay your New", image: "https://placehold.co/150x200" },
 ];
 
 const Experience = () => {
