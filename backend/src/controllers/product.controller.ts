@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import productModel from "../models/product.model";
 import { Product } from "../types/product";
-import { error } from "console";
 
 // get all products
 const getAllProducts = async (req: Request, res: Response) => {
@@ -34,7 +33,7 @@ const getProductById = async (req: Request, res: Response) => {
 
 // get product by name
 const getProductByName = async (req: Request, res: Response) => {
-  const productName = req.body.productName
+  const productName = req.params.productName
   try {
     const product = await productModel.getProductByName(productName)
     if(!product) {
