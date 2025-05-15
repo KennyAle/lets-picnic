@@ -6,6 +6,7 @@ import ProductsList from "./components/ProductsList";
 import DeliverAndMembership from "./components/DeliverAndMembership";
 import DiscountAndPromot from "./components/DiscountAndPromot";
 import Nav from "./components/Nav";
+import AppDownload from "./components/AppDownload";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <DiscountAndPromot />
       <DeliverAndMembership />
       <ProductsList />
+      <AppDownload />
       <Experience />
       <Footer />
     </main>
