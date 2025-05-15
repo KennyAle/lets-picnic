@@ -6,6 +6,7 @@ dotenv.config()
 import { connectDb } from './database/dbClient'
 import userRouter from './routes/user.routes'
 import categoryRouter from './routes/category.routes'
+import productRouter from './routes/product.routes'
 
 // Create server
 const app = express()
@@ -31,6 +32,7 @@ app.use(cookieSession({
 // Routes
 app.use('/user', userRouter);
 app.use('/category', categoryRouter);
+app.use('/product', productRouter)
 
 // Fallback
 app.use((req: Request, res: Response) => {
