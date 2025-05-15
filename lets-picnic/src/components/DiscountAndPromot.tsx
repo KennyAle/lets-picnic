@@ -1,6 +1,6 @@
 const DiscountAndPromot = () => {
   return (
-    <div className="flex gap-5">
+    <div className="flex justify-between gap-5">
         <section className="flex flex-col justify-center w-3xs h-100 bg-pink-200 rounded-2xl">
             <div className="h-1/2 flex flex-col gap-3 justify-center bg-pink-200 rounded-t-2xl px-7 pt-3">
                 <h2 className="text-rose-950 font-extrabold text-lg">Save</h2>
