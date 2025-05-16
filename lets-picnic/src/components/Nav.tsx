@@ -1,12 +1,14 @@
 import { FaBars, FaStore, FaShoppingCart } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import { TiFlash } from "react-icons/ti";
-import Cart from "./Cart";
+// import Cart from "./Cart";
+import { useCartUI } from "../contexts/UIContext";
 
 const Nav = () => {
+  const {cartRef} = useCartUI()
   return (
     <>
-    <Cart />
+      {/* <Cart /> */}
       <nav className="w-full flex justify-between fixed h-17 z-50 bg-teal-950 p-4">
         <div className="left-nav flex justify-around items-center gap-5">
           <FaBars className="text-white text-2xl" />
@@ -26,7 +28,7 @@ const Nav = () => {
         <div className="flex justify-around items-center gap-3.5">
           <TiFlash className="text-yellow-300" />
           <p className="text-white">Order now and get it!</p>
-          <div className="flex justify-center items-center rounded-full bg-white w-10 h-10">
+          <div ref={cartRef} className="flex justify-center items-center rounded-full bg-white w-10 h-10">
             <FaShoppingCart className="w-full text-teal-800" />
           </div>
           <img
