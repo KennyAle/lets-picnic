@@ -1,18 +1,27 @@
-type ProductItemProps = {
-  name: string;
-  weight: number;
-  imageUrl: string;
-  price: number;
-};
+import { useCart } from "../contexts/CartContext";
+import type { Product } from "../types/product.types";
 
-const ProductItem = ({ name, weight, imageUrl, price }: ProductItemProps) => {
+const ProductItem = ({
+  id,
+  product_name,
+  weight,
+  image,
+  price,
+}: Omit<Product, "quantity" | "description" | "category_name">) => {
+  const { addToCart, removeFromCart } = useCart();
+
   return (
     <div className="flex flex-col justify-center items-center p-4 rounded-lg bg-white">
-      <img src={imageUrl} alt={name} />
-      <h2 className="text-center text-green-900 font-semibold">{name}</h2>
+      <img src={image} alt={product_name} />
+      <h2 className="text-center text-green-900 font-semibold">{product_name}</h2>
       <p className="text-gray-400 font-semibold">{weight} gm</p>
       <p className="text-green-900 font-bold text-2xl">${price.toFixed(2)}</p>
-      <button className="flex justify-center items-center bg-lime-50 w-full text-4xl">+</button>
+      <button
+        onClick={() => addToCart({ id, product_name, price, image })}
+        className="flex justify-center items-center bg-lime-50 w-full text-4xl"
+      >
+        +
+      </button>
     </div>
   );
 };
