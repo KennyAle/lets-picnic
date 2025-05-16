@@ -22,9 +22,9 @@ const ConfirmOrder = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-7 bg-white rounded-lg px-5 py-7 h-72 no-scrollbar overflow-scroll">
+        <div className="flex flex-col gap-7 bg-white rounded-lg px-5 py-7 h-80">
           <h2 className="text-teal-800 font-bold text-xl">Review Items</h2>
-          <div className="flex flex-col gap-3 text-teal-900 font-semibold">
+          <div className="flex flex-col gap-3 text-teal-900 font-semibold no-scrollbar overflow-scroll">
             {products.products.map((product) => (
               <ConfirmItem
                 key={product.id}

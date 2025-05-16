@@ -9,10 +9,12 @@ import DiscountAndPromot from "./components/DiscountAndPromot";
 import Nav from "./components/Nav";
 import AppDownload from "./components/AppDownload";
 import ProductDetails from "./components/ProductDetails";
+// import Cart from "./components/Cart";
 
 function App() {
   return (
     <>
+      {/* <Cart /> */}
       <header>
         <Nav />
         <Banner />
