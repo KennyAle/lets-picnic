@@ -17,8 +17,8 @@ function App() {
       {/* <Cart /> */}
       <header>
         <Nav />
-        <Banner />
       </header>
+      <Banner />
       <main className="flex flex-col bg-gray-100 gap-15 px-20">
         <Categories />
         <ProductsList />
