@@ -19,10 +19,9 @@ function Home() {
         <ProductDetails />
         <DiscountAndPromot />
         <ProductsList />
-        <AppDownload />
-        <ProductsList />
         <DeliverAndMembership />
-        <ConfirmOrder />
+        <ProductsList />
+        <AppDownload />
       </div>
       <Experience />
     </>
