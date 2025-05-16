@@ -13,7 +13,7 @@ const app = express()
 
 // Middleware
 app.use(cors({
-  origin: "http://localhost:4321", // React port
+  origin: "http://localhost:5173", // React port
   credentials: true // allow cookie transfer
 }))
 app.use(express.json());
