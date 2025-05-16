@@ -1,9 +1,9 @@
 import products from "../assets/product.json";
-import ConfirmItem from "./ConfirmItem";
+import ConfirmItem from "../components/ConfirmItem";
 
 const ConfirmOrder = () => {
   return (
-    <div className="flex gap-5">
+    <div className="flex p-10 gap-5 bg-gray-100">
       <div className="flex flex-col gap-5 w-full">
         <div className="flex flex-col gap-7 bg-white rounded-lg px-5 py-7">
           <h2 className="text-teal-800 font-bold text-xl">
@@ -16,9 +16,9 @@ const ConfirmOrder = () => {
               alt=""
             />
             <div className="font-semibold text-slate-500">
-              <h3 className="text-slate-500 font-bold pb-1">Delivery to:</h3>
-              <p>(+1) 123-456-7890</p>
+              <h3 className="text-slate-500 font-bold pb-1">Deliver to:</h3>
               <p>Fraser St. Vancouver, British Columbia, CA, V5V 1N1</p>
+              <p>(+1) 123-456-7890</p>
             </div>
           </div>
         </div>

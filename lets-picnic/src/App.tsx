@@ -1,40 +1,33 @@
-import Banner from "./components/Banner";
-import Categories from "./components/Categories";
-import ConfirmOrder from "./components/ConfirmOrder";
-import Experience from "./components/Experience";
-import Footer from "./components/Footer";
-import ProductsList from "./components/ProductsList";
-import DeliverAndMembership from "./components/DeliverAndMembership";
-import DiscountAndPromot from "./components/DiscountAndPromot";
-import Nav from "./components/Nav";
-import AppDownload from "./components/AppDownload";
-import ProductDetails from "./components/ProductDetails";
-// import Cart from "./components/Cart";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./pages/Layout";
+import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
+import ProductsList from "./pages/products/ProductsList";
+import ProductDetails from "./pages/products/ProductDetails";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import Admin from "./pages/Admin";
+import ConfirmOrder from "./pages/ConfirmOrder";
 
 function App() {
   return (
-    <>
-      {/* <Cart /> */}
-      <header>
-        <Nav />
-      </header>
-      <Banner />
-      <main className="flex flex-col bg-gray-100 gap-15 px-20">
-        <Categories />
-        <ProductsList />
-        <ProductDetails />
-        <DiscountAndPromot />
-        <ProductsList />
-        <AppDownload />
-        <ProductsList />
-        <DeliverAndMembership />
-        <ConfirmOrder />
-      </main>
-      <footer>
-        <Experience />
-        <Footer />
-      </footer>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<SignUp />} />
+          <Route path="admin" element={<Admin />} />
+          <Route path="order" element={<ConfirmOrder />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+        <Route path="products" element={<Layout />}>
+          <Route index element={<ProductsList />} />
+          <Route path="category/:category" element={<ProductsList />} />
+          <Route path="product/:id" element={<ProductDetails />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

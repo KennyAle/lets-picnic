@@ -1,5 +1,5 @@
-import products from "../assets/product.json";
-import ProductItem from "./ProductItem";
+import products from "../../assets/product.json";
+import ProductItem from "../../components/ProductItem";
 const ProductsList = () => {
   return (
     <div className="grid grid-cols-5 gap-3">

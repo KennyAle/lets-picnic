@@ -1,6 +1,6 @@
 const ProductDetails = () => {
   return (
-    <div className="flex gap-10 rounded-lg bg-white shadow-lg p-10 w-full max-h-screen relative">
+    <div className="flex gap-10 rounded-3xl bg-white p-10 w-full max-h-screen relative">
         <div className="leading-none absolute top-5 left-5 bg-sky-900 text-blue-100 rounded-full w-25 h-25 flex flex-col items-center justify-center">
             <p className="leading-none text-4xl font-semibold self-start pl-4">70<span className="text-xl pl-0.5">%</span></p>
             <p className="opacity-80 leading-none uppercase pb-2 text-sm">Discount</p>
