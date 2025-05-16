@@ -9,7 +9,7 @@ const Info = [
 const Experience = () => {
   return (
     <div className="relative h-screen flex flex-col items-center bg-lime-300">
-      <div className="experience w-full h-full bg-white"></div>
+      <div className="experience w-full h-full bg-gray-100"></div>
       <div className="h-1/2 text-center flex flex-col gap-5 items-center justify-center text-teal-950 p-10">
         <h2 className="w-3/6 text-4xl font-bold tracking-tight">
           We always provide
