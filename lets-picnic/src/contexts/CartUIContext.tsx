@@ -8,7 +8,7 @@ import React, {
 } from "react";
 
 interface CartUIContextType {
-  cartRef: React.RefObject<HTMLImageElement>;
+  cartRef: React.RefObject<HTMLDivElement>;
   cartRect: DOMRect | null;
 }
 
@@ -27,7 +27,7 @@ interface CartUIProviderProps {
 }
 
 export const CartUIProvider = ({ children }: CartUIProviderProps) => {
-  const cartRef = useRef<HTMLImageElement>(null);
+  const cartRef = useRef<HTMLDivElement>(null);
   const [cartRect, setCartRect] = useState<DOMRect | null>(null);
 
   useEffect(() => {
