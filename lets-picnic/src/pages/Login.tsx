@@ -1,6 +1,10 @@
+import { ProfileForm } from "./ProfileForm"
+
 const Login = () => {
   return (
-    <div>Login</div>
+    <>
+      <ProfileForm />
+    </>
   )
 }
 
