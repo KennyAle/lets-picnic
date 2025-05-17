@@ -44,7 +44,7 @@ const getCategoryById = async (req: Request, res: Response) => {
 
 // add category
 const addCategory = async (req: Request, res: Response) => {
-  const { categoryName } = req.body;
+  const { categoryName, description, image } = req.body;
 
   if (!categoryName) {
     res.status(400).json({ error: "Missing required fields" });
@@ -58,7 +58,7 @@ const addCategory = async (req: Request, res: Response) => {
       return
     }
 
-    const newCategory = await categoryModel.createCategory({ categoryName });
+    const newCategory = await categoryModel.createCategory({ categoryName, description, image });
     res.status(201).json(newCategory);
   } catch (err) {
     res.status(500).json({ error: "Failed to create category" });
