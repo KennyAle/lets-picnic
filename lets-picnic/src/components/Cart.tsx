@@ -40,7 +40,7 @@ const Cart = () => {
         </h3>
         <Link
           to="/order"
-          className="w-full bg-lime-300 text-teal-950 font-semibold p-4 rounded-full text-md"
+          className="w-full bg-lime-300 text-center text-teal-950 font-semibold p-4 rounded-full text-md"
         >
           Check Order
         </Link>
