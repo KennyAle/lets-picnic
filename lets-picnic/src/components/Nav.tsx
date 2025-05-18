@@ -96,7 +96,7 @@ const Nav = () => {
         <div className="left-nav flex justify-around items-center gap-5">
           <FaBars className="text-white text-2xl hover:text-neutral-400 cursor-pointer" onClick={() => setIsMenuOpen(prev => !prev)} />
           <h3 className="text-white flex justify-center items-center gap-1.5 cursor-pointer" onClick={onHomePage}>
-            <FaStore className="text-amber-300" />
+          <img className="w-6 h-6" src="https://freepngimg.com/thumb/emoji/64969-emoticon-symbol-face-facebook-whatsapp-emoji.png" alt="" />
             Let's Picnic
           </h3>
           <div className="flex justify-center items-center bg-white rounded-3xl relative">
