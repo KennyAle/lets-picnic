@@ -2,7 +2,7 @@ import { FaBars, FaStore, FaShoppingCart } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import { TiFlash } from "react-icons/ti";
 import Cart from "./Cart";
-import { useCartUI } from "../contexts/UIContext";
+import { useCartUI } from "@/contexts/CartUIContext";
 import { useEffect, useState } from "react";
 import {motion, AnimatePresence} from 'framer-motion'
 import Menu from "./Menu";
