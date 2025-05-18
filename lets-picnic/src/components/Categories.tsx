@@ -10,8 +10,6 @@ const Categories = () => {
     const getCategories = async () => {
       const res = await fetch("http://localhost:3000/category");
       const data = await res.json();
-      console.log(data);
-
       setCategories(data);
     };
     getCategories();

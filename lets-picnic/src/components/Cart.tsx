@@ -23,7 +23,7 @@ const Cart = () => {
                 key={product.id ? product.id : `product-${Math.random()}`}
                 id={product.id}
                 image={product.image}
-                product_name={product.product_name}
+                productName={product.productName}
                 weight={12}
                 price={product.price}
                 quantity={product.quantity}

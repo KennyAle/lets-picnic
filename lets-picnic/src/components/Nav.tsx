@@ -44,7 +44,7 @@ const Nav = () => {
   const handleSearch = () => {
     if (search) {
       const searchItems = products.filter((item) =>
-        item.product_name.toLowerCase().includes(search.toLocaleLowerCase())
+        item.productName.toLowerCase().includes(search.toLocaleLowerCase())
       );
       setSearchResult(searchItems);
       setSearched(true);

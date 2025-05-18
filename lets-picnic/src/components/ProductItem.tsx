@@ -1,4 +1,3 @@
-import { motion, useAnimation } from "motion/react";
 import { useCart } from "../contexts/CartContext";
 import type { Product } from "../types/product.types";
 import { useCartUI } from "../contexts/CartUIContext";
@@ -6,7 +5,7 @@ import { useRef } from "react";
 
 const ProductItem = ({
   id,
-  product_name,
+  productName,
   weight,
   image,
   price,
@@ -17,7 +16,7 @@ const ProductItem = ({
 
   const handleAddToCart = async () => {
     if (!cartRect || !productRef.current) {
-      addToCart({ id, product_name, price, image });
+      addToCart({ id, productName, price, image });
       return;
     }
 
@@ -47,9 +46,7 @@ const ProductItem = ({
       [
         { transform: "translate(0, 0) scale(1)", opacity: 1 },
         {
-          transform: `translate(${deltaX * 0.5}px, ${
-            deltaY - 0
-          }px) scale(0.7)`,
+          transform: `translate(${deltaX * 0.5}px, ${deltaY - 0}px) scale(0.7)`,
           opacity: 0.8,
         },
         {
@@ -64,17 +61,16 @@ const ProductItem = ({
 
     animation.onfinish = () => {
       clone.remove();
-      addToCart({ id, product_name, price, image });
+      addToCart({ id, productName, price, image });
     };
   };
 
   return (
     <div className="flex flex-col justify-center items-center p-4 rounded-lg bg-white">
-      <img ref={productRef} src={image} alt={product_name} />
+      <img ref={productRef} src={image} alt={productName} />
       <h2 className="text-center text-green-900 font-semibold">
-        {product_name}
+        {productName}
       </h2>
-      <p className="text-gray-400 font-semibold">{weight} gm</p>
       <p className="text-green-900 font-bold text-2xl">${price.toFixed(2)}</p>
       <button
         onClick={handleAddToCart}
