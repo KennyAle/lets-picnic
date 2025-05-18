@@ -1,12 +1,18 @@
 import { useCart } from "../contexts/CartContext";
 import ConfirmItem from "./ConfirmItem";
+import {motion} from 'framer-motion'
 
 const Cart = () => {
   const { cartItems, total } = useCart();
   
   return (
-    <div className="fixed h-screen overflow-hidden right-0 z-100 flex flex-col w-1/3 bg-white">
-      <div className="flex flex-col gap-4 bg-white rounded-lg p-4 h-96">
+    <motion.div className="fixed h-screen overflow-hidden top-16 right-0 z-1000 flex flex-col w-1/3 bg-white"
+      initial={{x:"100%"}}
+      animate={{x:0}}
+      exit={{x:"100%"}}
+      transition={{duration:0.4}}
+    >
+      <div className="flex flex-col gap-4 bg-white rounded-lg p-4 h-72">
         <h2 className="text-teal-800 font-bold text-xl">Review Items</h2>
         <div className="flex flex-col gap-3 text-teal-900 font-semibold no-scrollbar overflow-scroll">
           {cartItems.map((product) => (
@@ -30,7 +36,7 @@ const Cart = () => {
           Checkout
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
