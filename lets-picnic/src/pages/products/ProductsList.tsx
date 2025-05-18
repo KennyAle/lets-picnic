@@ -9,7 +9,7 @@ const ProductsList = () => {
       const res = await fetch("http://localhost:3000/product");
       const data = await res.json();
       setProducts(data);
-      console.log(data);
+      // console.log(data);
     };
     getProducts();
   }, []);
@@ -17,9 +17,11 @@ const ProductsList = () => {
     <div className="grid grid-cols-5 gap-3">
       {products.slice(0, 10).map((product) => (
         <ProductItem
-          name={product.product_name}
+          key={product.id}
+          id={product.id}
+          product_name={product.product_name}
           weight={12}
-          imageUrl={product.image}
+          image={product.image}
           price={product.price}
         />
       ))}

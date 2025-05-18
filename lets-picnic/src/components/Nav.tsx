@@ -1,38 +1,182 @@
 import { FaBars, FaStore, FaShoppingCart } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import { TiFlash } from "react-icons/ti";
+import Cart from "./Cart";
+import { useCartUI } from "@/contexts/CartUIContext";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Menu from "./Menu";
+import { useNavigate } from "react-router-dom";
+import { IoPersonCircleOutline } from "react-icons/io5";
+import { RxCross2 } from "react-icons/rx";
+import SearchResult from "./SearchResult";
+import { type Product } from "../types/product.types";
+import { useSession } from "@/contexts/SessionContext";
+import toast from "react-hot-toast";
 
 const Nav = () => {
+  const { cartRef } = useCartUI();
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const { user, logout } = useSession();
+
+  const onHomePage = () => {
+    navigate("/");
+  };
+  const onLoginPage = () => {
+    navigate("/login");
+  };
+
+  const [search, setSearch] = useState("");
+  const [searched, setSearched] = useState(false);
+  const [searchResult, setSearchResult] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  useEffect(() => {
+    const getProducts = async () => {
+      const res = await fetch(`http://localhost:3000/product`);
+      const data = await res.json();
+      setProducts(data);
+    };
+    getProducts();
+  }, []);
+
+  const handleSearch = () => {
+    if (search) {
+      const searchItems = products.filter((item) =>
+        item.product_name.toLowerCase().includes(search.toLocaleLowerCase())
+      );
+      setSearchResult(searchItems);
+      setSearched(true);
+    }
+  };
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (search && e.key === "Enter") {
+      handleSearch();
+    }
+  };
+  const clearInput = () => {
+    setSearch("");
+    setSearchResult([]);
+    setSearched(false);
+  };
+
   return (
-    <nav className="w-full flex justify-between fixed h-17 z-50 bg-teal-950 p-4">
-      <div className="left-nav flex justify-around items-center gap-5">
-        <FaBars className="text-white text-2xl" />
-        <h3 className="text-white flex justify-center items-center gap-1.5">
-          <FaStore className="text-amber-300" />
-          Let's Picnic
-        </h3>
-        <div className="flex justify-center items-center bg-white rounded-3xl">
-          <input
-            className="bg-white rounded-3xl w-100 m-1 outline-none focus:ring-0 pl-4 px-2 py-1"
-            type="text"
-            placeholder="Search item..."
+    <>
+      {/* Display search results */}
+      {searched && (
+        <SearchResult searched={searched} searchResult={searchResult} />
+      )}
+
+      {/* Menu animation */}
+      <AnimatePresence>
+        {isMenuOpen && <Menu />}
+        {isMenuOpen && (
+          <motion.div
+            className="fixed top-16 z-100  bg-black w-screen h-screen"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.7 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={() => setIsMenuOpen(false)}
+          ></motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Cart animation */}
+      <AnimatePresence>
+        {isCartOpen && (
+          <>
+            <Cart key="cart" />
+            <motion.div
+              key="cart-overlay"
+              className="fixed top-16 z-100  bg-black w-screen h-screen"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.7 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={() => setIsCartOpen(false)}
+            />
+          </>
+        )}
+      </AnimatePresence>
+
+      <nav className="w-full flex justify-between fixed h-16 z-500 bg-teal-950 p-4 ">
+        <div className="left-nav flex justify-around items-center gap-5">
+          <FaBars
+            className="text-white text-2xl hover:text-neutral-400 cursor-pointer"
+            onClick={() => setIsMenuOpen((prev) => !prev)}
           />
-          <CiSearch className="bg-white rounded-3xl w-10 text-2xl font-bold" />
+          <h3
+            className="text-white flex justify-center items-center gap-1.5 cursor-pointer"
+            onClick={onHomePage}
+          >
+            <FaStore className="text-amber-300" />
+            Let's Picnic
+          </h3>
+          <div className="flex justify-center items-center bg-white rounded-3xl relative">
+            <input
+              className="bg-white rounded-3xl w-100 m-1 outline-none focus:ring-0 pl-4 px-2 py-1"
+              type="text"
+              placeholder="Search item..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+            {search && (
+              <RxCross2
+                className="text-3xs bg-gray-400 text-white absolute right-11 z-10 rounded-sm cursor-pointer"
+                onClick={clearInput}
+              />
+            )}
+
+            <CiSearch
+              className="bg-white rounded-3xl w-10 text-2xl absolute right-1 cursor-pointer"
+              onClick={handleSearch}
+            />
+          </div>
         </div>
-      </div>
-      <div className="flex justify-around items-center gap-3.5">
-        <TiFlash className="text-yellow-300" />
-        <p className="text-white">Order now and get it!</p>
-        <div className="flex justify-center items-center rounded-full bg-white w-10 h-10">
-          <FaShoppingCart className="w-full text-teal-800" />
+        <div className="flex justify-around items-center gap-3.5">
+          <TiFlash className="text-yellow-300" />
+          <p className="text-white text-sm tracking-tight">
+            Order now and get it within{" "}
+            <span className="text-yellow-200">15 min!</span>
+          </p>
+          {user ? (
+            <div
+              className="flex justify-center items-center gap-1 cursor-pointer"
+              onClick={async () => {
+                try {
+                  await logout();
+                  toast.success("Log Out Successful");
+                  navigate("/");
+                } catch (error) {
+                  toast.error("Logout failed");
+                }
+              }}
+            >
+              <IoPersonCircleOutline className="text-white text-2xl" />
+              <p className="text-white text-xs font-bold">Log out</p>
+            </div>
+          ) : (
+            <div
+              className="flex flex-col justify-center items-center cursor-pointer"
+              onClick={onLoginPage}
+            >
+              <p className="text-white text-xs font-bold">Log in</p>
+              <p className="text-white text-xs font-bold">Sign Up</p>
+            </div>
+          )}
+          <div
+            ref={cartRef}
+            className="flex justify-center items-center rounded-full bg-white w-9 h-9 hover:bg-neutral-400 cursor-pointer"
+            onClick={() => setIsCartOpen((prev) => !prev)}
+          >
+            <FaShoppingCart className="w-full text-teal-800" />
+          </div>
         </div>
-        <img
-          className="rounded-full w-10 h-10"
-          src="https://placehold.jp/150x150.png"
-          alt=""
-        />
-      </div>
-    </nav>
+      </nav>
+    </>
   );
 };
 
