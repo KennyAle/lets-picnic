@@ -11,12 +11,15 @@ import { IoPersonCircleOutline } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 import SearchResult from "./SearchResult";
 import { type Product } from "../types/product.types";
+import { useSession } from "@/contexts/SessionContext";
+import toast from "react-hot-toast";
 
 const Nav = () => {
   const { cartRef } = useCartUI();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const { user, logout } = useSession();
 
   const onHomePage = () => {
     navigate("/");
@@ -139,13 +142,31 @@ const Nav = () => {
             Order now and get it within{" "}
             <span className="text-yellow-200">15 min!</span>
           </p>
-          <div
-            className="flex justify-center items-center gap-1 cursor-pointer"
-            onClick={onLoginPage}
-          >
-            <IoPersonCircleOutline className="text-white text-2xl" />
-            <p className="text-white text-xs font-extrabold">Log in</p>
-          </div>
+          {user ? (
+            <div
+              className="flex justify-center items-center gap-1 cursor-pointer"
+              onClick={async () => {
+                try {
+                  await logout();
+                  toast.success("Log Out Successful");
+                  navigate("/");
+                } catch (error) {
+                  toast.error("Logout failed");
+                }
+              }}
+            >
+              <IoPersonCircleOutline className="text-white text-2xl" />
+              <p className="text-white text-xs font-bold">Log out</p>
+            </div>
+          ) : (
+            <div
+              className="flex flex-col justify-center items-center cursor-pointer"
+              onClick={onLoginPage}
+            >
+              <p className="text-white text-xs font-bold">Log in</p>
+              <p className="text-white text-xs font-bold">Sign Up</p>
+            </div>
+          )}
           <div
             ref={cartRef}
             className="flex justify-center items-center rounded-full bg-white w-9 h-9 hover:bg-neutral-400 cursor-pointer"
