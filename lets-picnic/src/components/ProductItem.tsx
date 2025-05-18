@@ -1,7 +1,7 @@
 import { motion, useAnimation } from "motion/react";
 import { useCart } from "../contexts/CartContext";
 import type { Product } from "../types/product.types";
-import { useCartUI } from "../contexts/UIContext";
+import { useCartUI } from "../contexts/CartUIContext";
 import { useRef } from "react";
 
 const ProductItem = ({
@@ -12,7 +12,6 @@ const ProductItem = ({
   price,
 }: Omit<Product, "quantity" | "description" | "category_name">) => {
   const { addToCart } = useCart();
-  const controls = useAnimation();
   const { cartRect } = useCartUI();
   const productRef = useRef<HTMLImageElement>(null);
 
@@ -49,13 +48,12 @@ const ProductItem = ({
         { transform: "translate(0, 0) scale(1)", opacity: 1 },
         {
           transform: `translate(${deltaX * 0.5}px, ${
-            deltaY - 20
+            deltaY - 0
           }px) scale(0.7)`,
           opacity: 0.8,
         },
         {
           transform: `translate(${deltaX}px, ${deltaY}px) scale(0.2)`,
-          opacity: 0,
         },
       ],
       {
