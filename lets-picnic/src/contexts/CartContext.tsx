@@ -4,7 +4,15 @@ import type { Product } from "../types/product.types";
 type CartContextType = {
   cartItems: Product[];
   addToCart: (
-    item: Omit<Product, "quantity" | "description" | "category_name">
+    item: Omit<
+      Product,
+      | "quantity"
+      | "description"
+      | "category_name"
+      | "rating"
+      | "sku"
+      | "category"
+    >
   ) => void;
   removeFromCart: (id: number) => void;
   clearCart: () => void;
@@ -28,7 +36,15 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const cartQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   const addToCart = (
-    item: Omit<Product, "quantity" | "description" | "category_name">
+    item: Omit<
+      Product,
+      | "quantity"
+      | "description"
+      | "category_name"
+      | "rating"
+      | "sku"
+      | "category"
+    >
   ) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((p) => p.id === item.id);
@@ -45,6 +61,13 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             quantity: 1,
             description: "",
             category_name: "",
+            rating: 0,
+            sku: "",
+            category: {
+              categoryName: "",
+              categoryDescription: "",
+              categryImage: "",
+            },
           },
         ];
       }

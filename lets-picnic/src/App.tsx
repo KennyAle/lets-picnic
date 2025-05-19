@@ -14,7 +14,7 @@ function App() {
   return (
     <>
       <div className="z-1000">
-        <Toaster position="top-right" />
+        <Toaster position="bottom-right" />
       </div>
       <BrowserRouter>
         <ScrollToTop />

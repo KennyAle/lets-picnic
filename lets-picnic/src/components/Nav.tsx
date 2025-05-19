@@ -43,14 +43,12 @@ const Nav = () => {
       const res = await fetch(`http://localhost:3000/product`);
       const data = await res.json();
       setProducts(data);
-      console.log(data);
     };
     getProducts();
   }, []);
 
   const handleSearch = () => {
     if (search) {
-      console.log(products[0].product.productName);
       const searchItems = products.filter((item) =>
         item.product.productName.toLowerCase().includes(search.toLocaleLowerCase())
       );
@@ -60,7 +58,6 @@ const Nav = () => {
   };
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (search && e.key === "Enter") {
-      console.log(search);
       handleSearch();
     }
   };

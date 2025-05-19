@@ -2,13 +2,14 @@ import { useCart } from "../contexts/CartContext";
 import type { Product } from "../types/product.types";
 import { useCartUI } from "../contexts/CartUIContext";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 
 const ProductItem = ({
   id,
   productName,
   image,
   price,
-}: Omit<Product, "quantity" | "description" | "category_name">) => {
+}: Omit<Product, "quantity" | "description" | "category_name" | "rating" | "sku" | "category">) => {
   const { addToCart } = useCart();
   const { cartRect } = useCartUI();
   const productRef = useRef<HTMLImageElement>(null);
@@ -66,14 +67,14 @@ const ProductItem = ({
 
   return (
     <div className="round-shape-item flex flex-col justify-center items-center p-2.5 rounded-2xl bg-white shadow-sm/5">
-      <div className="w-full p-2 h-36 flex justify-center items-center">
+      <Link to={`/products/product/${id}`} className="w-full p-2 h-36 flex justify-center items-center">
         <img
           ref={productRef}
           src={image}
           alt={productName}
           className="w-full h-full object-cover"
         />
-      </div>
+      </Link>
       <h2 className="text-center tracking-tight text-lg text-teal-900 font-bold mt-2">
         {productName}
       </h2>
