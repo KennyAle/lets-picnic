@@ -69,7 +69,6 @@ const getProductById = async (id: number) => {
        ON product.category_id = category.id
        WHERE product.id = $1`, [id]
     )
-    console.log(result.rows[0])
     const products = result.rows.map((row) => {
       return {
         product: {
@@ -223,7 +222,6 @@ const editProduct = async (id: number, updatedProduct: Partial<Product>) => {
   const client = createClient()
   try {
     await client.connect()
-    console.log("updatedProduct", updatedProduct)
     const updateData = {
       productName: updatedProduct.productName ?? foundProduct.product.productName,
       categoryId: updatedProduct.categoryId ?? foundProduct.product.categoryId,
@@ -234,7 +232,6 @@ const editProduct = async (id: number, updatedProduct: Partial<Product>) => {
       rating: updatedProduct.rating ?? foundProduct.product.rating,
       sku: updatedProduct.sku ?? foundProduct.product.sku
     }
-    console.log("updateData", updateData)
     const result = await client.query(
       `UPDATE "product" SET product_name = $1, category_id = $2, price = $3, image = $4, description = $5, discount_percentage = $6, rating = $7, sku = $8 WHERE id = $9 RETURNING *`,
       [updateData.productName, updateData.categoryId, updateData.price, updateData.image, updateData.description, updateData.discountPercentage, updateData.rating, updateData.sku, id])

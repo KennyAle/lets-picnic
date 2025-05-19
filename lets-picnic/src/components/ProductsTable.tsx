@@ -32,24 +32,51 @@ export function ProductsTable() {
   const [products, setProducts] = useState<ProductWrapper[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [productToDelete, setProductToDelete] = useState<Product | null>(null);
 
   const { register, handleSubmit, reset } = useForm<FormData>();
 
   useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const response = await fetch("http://localhost:3000/product");
-        const data = await response.json();
-        setProducts(data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    }
     fetchProducts();
   }, []);
 
-  const openModal = () => {
-    reset();
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/product");
+      const data = await response.json();
+      setProducts(data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
+  const openModal = (product: Product | null) => {
+    setSelectedProduct(product);
+    if (product) {
+      reset({
+        productName: product.productName,
+        categoryId: product.categoryId,
+        price: product.price,
+        image: product.image,
+        description: product.description,
+        discountPercentage: product.discountPercentage,
+        rating: product.rating,
+        sku: product.sku,
+      });
+    } else {
+      reset({
+        productName: '',
+        categoryId: 1,
+        price: 0,
+        image: '',
+        description: '',
+        discountPercentage: 0,
+        rating: 0,
+        sku: '',
+      });
+    }
     setIsModalOpen(true);
   };
 
@@ -64,22 +91,56 @@ export function ProductsTable() {
     console.log("Submitting data:", payload);
 
     try {
-      const response = await fetch("http://localhost:3000/product", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+      let response;
+      if (selectedProduct) {
+        response = await fetch(
+          `http://localhost:3000/product/${selectedProduct.id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          }
+        );
+      } else {
+        response = await fetch("http://localhost:3000/product", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+      }
 
-      if (!response.ok) throw new Error("Error adding product");
+      if (!response.ok) throw new Error("Error saving product");
 
-      const updated = await response.json();
-      setProducts((prev) => [...prev, { product: updated }]); 
+      await fetchProducts();
 
       closeModal();
     } catch (error) {
       console.error("Error adding product:", error);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!productToDelete) return;
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/product/${productToDelete.id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!response.ok) throw new Error("Error deleting product");
+
+      await fetchProducts();
+
+      setIsConfirmDialogOpen(false);
+    } catch (error) {
+      console.error("Error deleting product:", error);
     }
   };
 
@@ -92,7 +153,7 @@ export function ProductsTable() {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="w-1/2 border rounded px-2 py-1"
         />
-        <Button onClick={openModal}>Add Product</Button>
+      <Button onClick={() => openModal(null)}>Add Product</Button>
       </div>
 
       <table className="min-w-full bg-white">
@@ -119,10 +180,16 @@ export function ProductsTable() {
               <td className="px-6 py-4">{product.productName}</td>
               <td className="px-6 py-4">${product.price}</td>
               <td className="px-6 py-4 space-x-2">
-                <Button variant="outline" disabled>
+                <Button variant="outline" onClick={() => openModal(product)}>
                   Edit
                 </Button>
-                <Button variant="destructive" disabled>
+                <Button
+                  variant="destructive"
+                  onClick={() => {
+                    setProductToDelete(product); // 削除する商品をセット
+                    setIsConfirmDialogOpen(true); // 確認ダイアログを開く
+                  }}
+                >
                   Delete
                 </Button>
               </td>
@@ -131,10 +198,24 @@ export function ProductsTable() {
         </tbody>
       </table>
 
+      <Dialog open={isConfirmDialogOpen} onOpenChange={setIsConfirmDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirm Deletion</DialogTitle>
+          </DialogHeader>
+          <DialogFooter>
+            <Button onClick={() => setIsConfirmDialogOpen(false)}>Cancel</Button>
+            <Button variant="destructive" onClick={handleDelete}>
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="max-w-sm mx-auto mt-10 max-h-[80vh] overflow-auto rounded-lg">
           <DialogHeader>
-            <DialogTitle>Add Product</DialogTitle>
+          <DialogTitle>{selectedProduct ? "Edit Product" : "Add Product"}</DialogTitle>
           </DialogHeader>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -163,7 +244,7 @@ export function ProductsTable() {
                 placeholder="Category ID"
                 type="number"
                 min={1}
-                required
+                // required
               />
             </div>
             <div>
@@ -252,7 +333,7 @@ export function ProductsTable() {
             </div>
 
             <DialogFooter>
-              <Button type="submit">Add</Button>
+              <Button type="submit">{selectedProduct ? "Update" : "Add"}</Button>
             </DialogFooter>
           </form>
         </DialogContent>

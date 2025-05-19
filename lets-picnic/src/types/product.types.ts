@@ -4,11 +4,12 @@ export type Product = {
     price: number
     image: string
     description: string
-    category_name: string
-    quantity: number
+    discountPercentage: number
     rating: number
     sku: string
+    categoryId: number
     category: category
+    quantity:number // not recommend having this here, quantity should be in the cart-item
 }
 
 interface category {
