@@ -1,46 +1,66 @@
 import { motion } from "framer-motion";
 
-const container ={
+const container = {
   hidden: {},
   show: {
     transition: {
       staggerChildren: 0.2,
-      ease: "easeOut"
+      ease: "easeOut",
     },
   },
-}
+};
+
 const item = {
-  hidden: { opacity: 0, y: 30},
-  show: { opacity: 1, y: 0, transition: { duration:0.3, ease: "easeOut"}}
-}
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
+};
 
 const Banner = () => {
   return (
     <div className="relative bg-teal-950 sm:h-screen flex flex-col sm:flex-row justify-around items-center">
-      <motion.section className="sm:w-1/3 flex flex-col justify-center p-5 sm:items-start sm:gap-0 gap-10"
+      <motion.section
+        className="sm:w-1/3 flex flex-col justify-center p-5 sm:items-start sm:gap-0 gap-10"
         variants={container}
         initial="hidden"
         whileInView="show"
+        viewport={{ once: true }}
       >
-        <motion.h1 className="text-white text-5xl font-extrabold tracking-tighter leading-relaxed sm:leading-snug" variants={item}>
+        <motion.h1
+          className="text-white text-5xl font-extrabold tracking-tighter leading-relaxed sm:leading-snug"
+          variants={item}
+          viewport={{ once: true }}
+        >
           We bring the store to your door
         </motion.h1>
-        <motion.p className="text-white" variants={item}>
+
+        <motion.p
+          className="text-white"
+          variants={item}
+          viewport={{ once: true }}
+        >
           Get organic produce and sustainably sourced groceries delivery at up
           to 4% off grocery.
         </motion.p>
-        <motion.button className="bg-lime-300 rounded-md font-bold p-2 w-1/3" variants={item}>
+
+        <motion.button
+          className="bg-lime-300 rounded-md font-bold p-2 w-1/3"
+          variants={item}
+          viewport={{ once: true }}
+        >
           Shop now
         </motion.button>
       </motion.section>
+
       <motion.img
         className="self-end h-3/4 w-2/4"
         src="images/img_foods.png"
         alt=""
-        initial={{opacity:0, y:90}}
-        whileInView={{opacity:1, y:0}}
-        transition={{duration:0.6, ease: "easeOut"}}
+        initial={{ opacity: 0, y: 90 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        viewport={{ once: true }}
       />
+
       <svg
         className="absolute bottom-0 left-0 w-full overflow-hidden"
         viewBox="0 0 1440 101"

@@ -6,7 +6,6 @@ import { MdOutlineShoppingCartCheckout } from "react-icons/md";
 import { Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useCart } from "@/contexts/CartContext";
-import toast from "react-hot-toast";
 import { useCartUI } from "@/contexts/CartUIContext";
 
 interface productWrapper {
@@ -59,7 +58,6 @@ const ProductDetails = () => {
 
   const productRect = productRef.current.getBoundingClientRect();
 
-  // Tamaño reducido inicial del clon (50% del tamaño original)
   const scaleFactor = 0.5;
   const initialWidth = productRect.width * scaleFactor;
   const initialHeight = productRect.height * scaleFactor;
