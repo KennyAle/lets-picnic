@@ -124,7 +124,7 @@ const Nav = () => {
             onClick={() => setIsMenuOpen((prev) => !prev)}
           />
           <h3
-            className="text-white flex justify-center items-center gap-1.5 cursor-pointer"
+            className="text-white font-bold tracking-tight flex justify-center items-center gap-1.5 cursor-pointer"
             onClick={onHomePage}
           >
             <img

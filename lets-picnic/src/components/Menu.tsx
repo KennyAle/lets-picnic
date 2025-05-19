@@ -9,21 +9,21 @@ const Menu = () => {
       exit={{x:"-100%"}}
       transition={{duration:0.4}}
     >
-      <Link to="/" className="text-white font-bold text-xl p-4 hover:underline">Home</Link>
-      <Link to="/products" className="text-white font-bold text-xl p-4 hover:underline">Products</Link>
-      <Link to="/products/category/1-beauty" className="text-white font-bold text-xs pl-8 pb-3 hover:underline">Beauty</Link>
-      <Link to="/products/category/2-fragrances" className="text-white font-bold text-xs pl-8 pb-3 hover:underline">Fragrances</Link>
-      <Link to="/products/category/3-funiture" className="text-white font-bold text-xs pl-8 pb-3 hover:underline">Funitures</Link>
-      <Link to="/products/category/4-groceries" className="text-white font-bold text-xs pl-8 pb-3 hover:underline">Groceries</Link>
-      <Link to="/" className="text-white font-bold text-xl p-4 hover:underline">About Us</Link>
-      <Link to="/" className="text-white font-bold text-xs pl-8 pb-3 hover:underline">About Let's Picnic</Link>
-      <Link to="/" className="text-white font-bold text-xs pl-8 pb-3 hover:underline">Carrers</Link>
-      <Link to="/" className="text-white font-bold text-xs pl-8 pb-3 hover:underline">News & Blog</Link>
-      <Link to="/products" className="text-white font-bold text-xl p-4 hover:underline">Help</Link>
-      <Link to="/" className="text-white font-bold text-xs pl-8 pb-3 hover:underline">Shopcart Help</Link>
-      <Link to="/" className="text-white font-bold text-xs pl-8 pb-3 hover:underline">Returns</Link>
-      <Link to="/" className="text-white font-bold text-xs pl-8 pb-3 hover:underline">Track Order</Link>
-      <Link to="/" className="text-white font-bold text-xs pl-8 pb-3 hover:underline">Contact Us</Link>     
+      <Link to="/" className="text-white font-bold text-xl p-4">Home</Link>
+      <Link to="/products" className="text-white font-bold text-xl px-4 py-3">Products</Link>
+      <Link to="/products/category/1-beauty" className="text-gray-100/90 font-semibold text-sm pl-8 pb-3 hover:text-white">Beauty</Link>
+      <Link to="/products/category/2-fragrances" className="text-gray-100/90 font-semibold text-sm pl-8 pb-3 hover:text-white">Fragrances</Link>
+      <Link to="/products/category/3-funiture" className="text-gray-100/90 font-semibold text-sm pl-8 pb-3 hover:text-white">Funitures</Link>
+      <Link to="/products/category/4-groceries" className="text-gray-100/90 font-semibold text-sm pl-8 pb-3 hover:text-white">Groceries</Link>
+      <Link to="/" className="text-white font-bold text-xl px-4 py-3">About Us</Link>
+      <Link to="/" className="text-gray-100/90 font-semibold text-sm pl-8 pb-3 hover:text-white">About Let's Picnic</Link>
+      <Link to="/" className="text-gray-100/90 font-semibold text-sm pl-8 pb-3 hover:text-white">Carrers</Link>
+      <Link to="/" className="text-gray-100/90 font-semibold text-sm pl-8 pb-3 hover:text-white">News & Blog</Link>
+      <Link to="/products" className="text-white font-bold text-xl px-4 py-3">Help</Link>
+      <Link to="/" className="text-gray-100/90 font-semibold text-sm pl-8 pb-3 hover:text-white">Shopcart Help</Link>
+      <Link to="/" className="text-gray-100/90 font-semibold text-sm pl-8 pb-3 hover:text-white">Returns</Link>
+      <Link to="/" className="text-gray-100/90 font-semibold text-sm pl-8 pb-3 hover:text-white">Track Order</Link>
+      <Link to="/" className="text-gray-100/90 font-semibold text-sm pl-8 pb-3 hover:text-white">Contact Us</Link>     
     </motion.div>
   )
 }
