@@ -16,13 +16,13 @@ const item = {
 
 const Banner = () => {
   return (
-    <div className="relative bg-teal-950 h-screen flex justify-around items-center">
-      <motion.section className="w-1/3 flex flex-col justify-center gap-10"
+    <div className="relative bg-teal-950 sm:h-screen flex flex-col sm:flex-row justify-around items-center">
+      <motion.section className="sm:w-1/3 flex flex-col justify-center p-5 sm:items-start sm:gap-0 gap-10"
         variants={container}
         initial="hidden"
         whileInView="show"
       >
-        <motion.h1 className="text-white text-5xl font-extrabold tracking-tighter" variants={item}>
+        <motion.h1 className="text-white text-5xl font-extrabold tracking-tighter leading-relaxed sm:leading-snug" variants={item}>
           We bring the store to your door
         </motion.h1>
         <motion.p className="text-white" variants={item}>

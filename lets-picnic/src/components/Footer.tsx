@@ -1,20 +1,23 @@
+import { FaStore } from "react-icons/fa";
+
 const Footer = () => {
   return (
-    <div className="flex justify-center bg-yellow-50 px-12 py-16 gap-10">
-      <div className="flex flex-col justify-between w-2/5">
-        <div className="flex flex-col gap-3">
+    <div className="flex flex-col sm:flex-row sm:items-stretch items-center justify-center   bg-yellow-50 px-12 py-16 gap-10">
+      <div className="flex flex-col justify-between w-full h-full sm:w-2/5">
+        <div className="flex flex-col gap-3 justify-center items-center sm:items-start">
           <h2 className="flex items-center gap-2 tracking-tight font-bold text-2xl text-teal-800">
-            <img className="w-8 h-8" src="https://freepngimg.com/thumb/emoji/64969-emoticon-symbol-face-facebook-whatsapp-emoji.png" alt="" />
+            {/* <img className="w-8 h-8" src="https://freepngimg.com/thumb/emoji/64969-emoticon-symbol-face-facebook-whatsapp-emoji.png" alt="" /> */}
+            <FaStore className="text-amber-300 text-2xl" />
             Let's Picnic
           </h2>
-          <p>
+          <p className="text-center sm:text-start">
             Let's Picnic is a picnic planning app that helps you plan the
             perfect picnic.
           </p>
         </div>
         <div className="flex flex-col gap-2">
-          <h3 className="font-semibold text-sm">Accepted Payments</h3>
-          <div className="flex space-x-2">
+          <h3 className="font-semibold text-sm text-center sm:text-start">Accepted Payments</h3>
+          <div className="flex space-x-2 justify-center sm:justify-start">
             <img
               className="w-8 h-8"
               src="https://cdn-icons-png.flaticon.com/512/349/349228.png"
@@ -48,7 +51,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="flex w-full justify-around">
+      <div className="flex w-full justify-around gap-3 sm:gap-0">
         <div className="flex flex-col gap-3.5">
           <h3 className="font-semibold">Department</h3>
           <ul className="flex flex-col gap-2 text-sm">

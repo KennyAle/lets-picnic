@@ -1,4 +1,4 @@
-import { FaBars, FaShoppingCart } from "react-icons/fa";
+import { FaBars, FaStore, FaShoppingCart } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import { TiFlash } from "react-icons/ti";
 import Cart from "./Cart";
@@ -117,26 +117,27 @@ const Nav = () => {
         )}
       </AnimatePresence>
 
-      <nav className="w-full flex justify-between fixed h-16 z-500 bg-teal-950 p-4 ">
-        <div className="left-nav flex justify-around items-center gap-5">
+      <nav className="w-screen lg:w-full flex justify-between fixed h-16 z-500 bg-teal-950 p-4 ">
+        <div className="flex justify-around items-center gap-5">
           <FaBars
             className="text-white text-2xl hover:text-neutral-400 cursor-pointer"
             onClick={() => setIsMenuOpen((prev) => !prev)}
           />
           <h3
-            className="text-white font-bold tracking-tight flex justify-center items-center gap-1.5 cursor-pointer"
+            className="text-white font-bold tracking-tight flex justify-center items-center gap-1.5 cursor-pointer "
             onClick={onHomePage}
           >
-            <img
+            <FaStore className="text-amber-300 text-2xl" />
+            {/* <img
               className="w-6 h-6"
               src="https://freepngimg.com/thumb/emoji/64969-emoticon-symbol-face-facebook-whatsapp-emoji.png"
               alt=""
-            />
-            Let's Picnic
+            /> */}
+            <span className="hidden sm:block">Let's Picnic</span>
           </h3>
           <div className="flex justify-center items-center bg-white rounded-3xl relative">
             <input
-              className="bg-white rounded-3xl w-100 m-1 outline-none focus:ring-0 pl-4 px-2 py-1"
+              className="bg-white rounded-3xl w-30 sm:w-100 md:w-70 lg:w-90 m-1 outline-none focus:ring-0 pl-4 px-2 py-1"
               type="text"
               placeholder="Search item..."
               value={search}
@@ -158,9 +159,9 @@ const Nav = () => {
         </div>
         <div className="flex justify-around items-center gap-3.5">
           <p className="flex items-center gap-1 text-white text-sm tracking-tight font-semibold">
-            <TiFlash className="text-yellow-300" />
-            Order now and get it within{" "}
-            <span className="text-yellow-200">15 min!</span>
+            <TiFlash className="text-yellow-300 hidden md:block" />
+            <span className="hidden md:block">Order now and get it within{" "}</span>
+            <span className="text-yellow-200 hidden md:block">15 min!</span>
           </p>
           {user ? (
             <div

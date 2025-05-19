@@ -23,7 +23,7 @@ const Login = () => {
       </div>
       <div className="flex w-full flex-col gap-4 flex-grow bg-white py-10 px-20">
         <h2 className="flex justify-center text-lg items-center gap-1.5 tracking-tighter font-semibold">
-          <FaStore className="text-amber-300" />
+          <FaStore className="text-amber-300 text-2xl" />
           Let's Picnic
         </h2>
         {showLogin ? (

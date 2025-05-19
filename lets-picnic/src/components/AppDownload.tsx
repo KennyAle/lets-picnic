@@ -34,13 +34,13 @@ const AppDownload = () => {
               initial="hidden"
               whileInView="show"
             >
-                <motion.h2 className="text-pink-200 text-3xl font-extrabold tracking-tighter" variants={item}>Stay Home and Get All</motion.h2>
-                <motion.h2 className="text-pink-200 text-3xl font-extrabold tracking-tighter" variants={item}>Your Essentail From</motion.h2>
-                <motion.h2 className="text-pink-200 text-3xl font-extrabold tracking-tighter" variants={item}>Our Market!</motion.h2>
+                <motion.h2 className="text-pink-200 text-2xl sm:text-3xl font-extrabold tracking-tighter" variants={item}>Stay Home and Get All</motion.h2>
+                <motion.h2 className="text-pink-200 text-2xl sm:text-3xl font-extrabold tracking-tighter" variants={item}>Your Essentail From</motion.h2>
+                <motion.h2 className="text-pink-200 text-2xl sm:text-3xl font-extrabold tracking-tighter" variants={item}>Our Market!</motion.h2>
                 <motion.p className="text-pink-300 tracking-tighter pt-4" variants={item}>Download the app from store or google play</motion.p>
                 <motion.div className="flex justify-evenly" variants={item}>
-                    <img className="w-30 h-9 rounded-sm" src="images/img_app_store.png" alt="" />
-                    <img className="w-30 h-9 rounded-sm" src="images/img_google_play.png" alt="" />
+                    <img className="w-20 h-6 sm:w-30 sm:h-9 rounded-sm" src="images/img_app_store.png" alt="" />
+                    <img className="w-20 h-6 sm:w-30 sm:h-9 rounded-sm" src="images/img_google_play.png" alt="" />
                 </motion.div>
         </motion.section>
         
@@ -49,7 +49,7 @@ const AppDownload = () => {
           whileInView={{scale:1}}
           transition={{duration:0.5, ease:"easeIn"}}
         >
-            <img className="w-2/4" src="images/img_deliver_free.png" alt="" />
+            <img className="w-2/4  hidden sm:block" src="images/img_deliver_free.png" alt="" />
         </motion.section>
         </div>
     </motion.div>
