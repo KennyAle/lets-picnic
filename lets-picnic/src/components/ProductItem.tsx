@@ -75,9 +75,9 @@ const ProductItem = ({
           className="w-full h-full object-cover"
         />
       </Link>
-      <h2 className="text-center tracking-tight text-lg text-teal-900 font-bold mt-2">
+      <Link to={`/products/product/${id}`} className="text-center tracking-tight text-lg text-teal-900 font-bold mt-2 hover:underline cursor-pointer">
         {productName}
-      </h2>
+      </Link>
       <h3 className="font-semibold text-sm text-gray-500 tracking-tight">
         Groceries
       </h3>
