@@ -91,12 +91,13 @@ export function SignupForm({ setShowLogin }: Props) {
             <FormItem>
               <FormLabel>First Name</FormLabel>
               <FormControl>
-                <Input placeholder="" {...field} />
+                <Input placeholder="Enter your first name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="lastName"
@@ -104,12 +105,13 @@ export function SignupForm({ setShowLogin }: Props) {
             <FormItem>
               <FormLabel>Last Name</FormLabel>
               <FormControl>
-                <Input placeholder="" {...field} />
+                <Input placeholder="Enter your last name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="email"
@@ -117,12 +119,17 @@ export function SignupForm({ setShowLogin }: Props) {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input type="email" placeholder="" {...field} />
+                <Input
+                  type="email"
+                  placeholder="Enter your email address"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="password"
@@ -130,12 +137,17 @@ export function SignupForm({ setShowLogin }: Props) {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="" {...field} />
+                <Input
+                  type="password"
+                  placeholder="Create a password"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="role"
@@ -160,6 +172,7 @@ export function SignupForm({ setShowLogin }: Props) {
             </FormItem>
           )}
         />
+
         <Button type="submit" className="w-full">
           Sign Up
         </Button>
