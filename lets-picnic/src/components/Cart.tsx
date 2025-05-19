@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 
 const Cart = () => {
   const { cartItems, total } = useCart();
+  console.log(cartItems);
+  
 
   return (
     <motion.div

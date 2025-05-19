@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import ProductItem from "../../components/ProductItem";
 import type { Product } from "../../types/product.types";
 import { useParams } from "react-router-dom";
-import { Skeleton } from "@/components/ui/skeleton";
+import { motion } from "framer-motion";
+import ProductItem from "@/components/ProductItem";
 
 type ProductWrapper = {
   product: Product;
@@ -13,6 +13,21 @@ type ProductsListProps = {
   isCategoryPage?: boolean;
 };
 
+const fadeInAnimationVariants = {
+  initial: {
+    opacity: 0,
+    y: 60,
+  },
+  animate: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.4,
+      delay: 0.04 * index,
+    },
+  }),
+};
+
 const ProductsList = ({ section, isCategoryPage }: ProductsListProps) => {
   const [products, setProducts] = useState<ProductWrapper[]>([]);
   const [loading, setLoading] = useState(true);
@@ -20,16 +35,16 @@ const ProductsList = ({ section, isCategoryPage }: ProductsListProps) => {
 
   const categoryId = categoryParam?.split("-")[0];
   const categoryName = categoryParam?.split("-")[1];
-  const isHome = !categoryParam;
 
   const getProducts = async () => {
+    setLoading(true);
     try {
       const res = await fetch("http://localhost:3000/product");
       const data = await res.json();
       setTimeout(() => {
         setProducts(data);
         setLoading(false);
-      }, 2000);
+      }, 1000);
     } catch (error) {
       console.error("Error fetching products:", error);
       setLoading(false);
@@ -37,6 +52,7 @@ const ProductsList = ({ section, isCategoryPage }: ProductsListProps) => {
   };
 
   const getProductsByCategory = async (category: string) => {
+    setLoading(true);
     try {
       const res = await fetch(
         `http://localhost:3000/product/category/${category}`
@@ -45,7 +61,7 @@ const ProductsList = ({ section, isCategoryPage }: ProductsListProps) => {
       setTimeout(() => {
         setProducts(data);
         setLoading(false);
-      }, 2000);
+      }, 1000);
     } catch (error) {
       console.error("Error fetching products by category:", error);
       setLoading(false);
@@ -104,7 +120,15 @@ const ProductsList = ({ section, isCategoryPage }: ProductsListProps) => {
   const skeletonArray = Array.from({ length: productLimit }, (_, i) => i);
 
   return (
-    <div className={containerStyles}>
+    <motion.div
+      variants={fadeInAnimationVariants}
+      initial="initial"
+      whileInView="animate"
+      viewport={{
+        once: true,
+      }}
+      className={containerStyles}
+    >
       <h2 className="text-3xl normal-case font-bold tracking-tight mb-4 text-teal-900">
         {renderTitle()}
       </h2>
@@ -122,17 +146,27 @@ const ProductsList = ({ section, isCategoryPage }: ProductsListProps) => {
                 <div className="mt-2 w-full h-10 bg-gray-100 dark:bg-gray-500 rounded"></div>
               </div>
             ))
-          : products.map(({ product }) => (
-              <ProductItem
-                key={product.id}
-                id={product.id}
-                productName={product.productName}
-                image={product.image}
-                price={product.price}
-              />
+          : products.map(({ product }, index) => (
+              <motion.div
+                variants={fadeInAnimationVariants}
+                initial="initial"
+                whileInView="animate"
+                viewport={{
+                  once: true,
+                }}
+                custom={index}
+              >
+                <ProductItem
+                  key={product.id}
+                  id={product.id}
+                  productName={product.productName}
+                  image={product.image}
+                  price={product.price}
+                />
+              </motion.div>
             ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

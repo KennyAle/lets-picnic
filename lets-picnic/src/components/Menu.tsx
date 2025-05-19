@@ -11,10 +11,10 @@ const Menu = () => {
     >
       <Link to="/" className="text-white font-bold text-xl p-4 hover:underline">Home</Link>
       <Link to="/products" className="text-white font-bold text-xl p-4 hover:underline">Products</Link>
-      <Link to="/products/category/beauty" className="text-white font-bold text-xs pl-8 pb-3 hover:underline">Beauty</Link>
-      <Link to="/products/category/fragrances" className="text-white font-bold text-xs pl-8 pb-3 hover:underline">Fragrances</Link>
-      <Link to="/products/category/funiture" className="text-white font-bold text-xs pl-8 pb-3 hover:underline">Funitures</Link>
-      <Link to="/products/category/groceries" className="text-white font-bold text-xs pl-8 pb-3 hover:underline">Groceries</Link>
+      <Link to="/products/category/1-beauty" className="text-white font-bold text-xs pl-8 pb-3 hover:underline">Beauty</Link>
+      <Link to="/products/category/2-fragrances" className="text-white font-bold text-xs pl-8 pb-3 hover:underline">Fragrances</Link>
+      <Link to="/products/category/3-funiture" className="text-white font-bold text-xs pl-8 pb-3 hover:underline">Funitures</Link>
+      <Link to="/products/category/4-groceries" className="text-white font-bold text-xs pl-8 pb-3 hover:underline">Groceries</Link>
       <Link to="/" className="text-white font-bold text-xl p-4 hover:underline">About Us</Link>
       <Link to="/" className="text-white font-bold text-xs pl-8 pb-3 hover:underline">About Let's Picnic</Link>
       <Link to="/" className="text-white font-bold text-xs pl-8 pb-3 hover:underline">Carrers</Link>
