@@ -70,6 +70,7 @@ const ProductsList = ({ section, isCategoryPage }: ProductsListProps) => {
 
   useEffect(() => {
     if (section) {
+      // ----------> [START] This code is only to get placehold information <----------------
       switch (section) {
         case "you-might-need":
           getProductsByCategory("4");
@@ -87,6 +88,7 @@ const ProductsList = ({ section, isCategoryPage }: ProductsListProps) => {
           getProducts();
           break;
       }
+      // ----------> [END] This code is only to get placehold information <----------------
     } else if (!categoryParam || categoryParam === "all") {
       getProducts();
     } else {
