@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import ConfirmOrder from "./pages/ConfirmOrder";
 import { Toaster } from "react-hot-toast";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Toaster position="top-right" />
       </div>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
@@ -26,7 +28,7 @@ function App() {
           </Route>
           <Route path="products" element={<Layout />}>
             <Route index element={<ProductsList />} />
-            <Route path="category/:category" element={<ProductsList />} />
+            <Route path="category/:categoryParam" element={<ProductsList isCategoryPage />} />
             <Route path="product/:id" element={<ProductDetails />} />
           </Route>
         </Routes>

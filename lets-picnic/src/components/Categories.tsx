@@ -20,7 +20,7 @@ const Categories = () => {
         index < 5 ? (
           <Link
             key={category.id}
-            to={`/products/category/${category.category_name}`}
+            to={`/products/category/${category.id}-${category.category_name}`}
             className="flex w-full flex-col relative gap-1 rounded-lg bg-white p-3"
           >
             <CategoryItem

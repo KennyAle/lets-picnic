@@ -1,22 +1,45 @@
+import { motion } from "framer-motion";
+
+const container ={
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.2,
+      ease: "easeOut"
+    },
+  },
+}
+const item = {
+  hidden: { opacity: 0, y: 30},
+  show: { opacity: 1, y: 0, transition: { duration:0.3, ease: "easeOut"}}
+}
+
 const Banner = () => {
   return (
     <div className="relative bg-teal-950 h-screen flex justify-around items-center">
-      <section className="w-1/3 flex flex-col justify-center gap-10">
-        <h1 className="text-white text-5xl font-extrabold tracking-tighter">
+      <motion.section className="w-1/3 flex flex-col justify-center gap-10"
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+      >
+        <motion.h1 className="text-white text-5xl font-extrabold tracking-tighter" variants={item}>
           We bring the store to your door
-        </h1>
-        <p className="text-white">
+        </motion.h1>
+        <motion.p className="text-white" variants={item}>
           Get organic produce and sustainably sourced groceries delivery at up
           to 4% off grocery.
-        </p>
-        <button className="bg-lime-300 rounded-md font-bold p-2 w-1/3">
+        </motion.p>
+        <motion.button className="bg-lime-300 rounded-md font-bold p-2 w-1/3" variants={item}>
           Shop now
-        </button>
-      </section>
-      <img
-        className="self-end h-full"
-        src="https://placehold.jp/200x200.png"
+        </motion.button>
+      </motion.section>
+      <motion.img
+        className="self-end h-3/4 w-2/4"
+        src="images/img_foods.png"
         alt=""
+        initial={{opacity:0, y:90}}
+        whileInView={{opacity:1, y:0}}
+        transition={{duration:0.6, ease: "easeOut"}}
       />
       <svg
         className="absolute bottom-0 left-0 w-full overflow-hidden"

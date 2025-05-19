@@ -6,5 +6,4 @@ export type Product = {
     description: string
     category_name: string
     quantity: number
-    weight: number
 }

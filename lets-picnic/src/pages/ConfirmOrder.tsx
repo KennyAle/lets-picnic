@@ -1,7 +1,9 @@
-import products from "../assets/product.json";
+import { useCart } from "@/contexts/CartContext";
 import ConfirmItem from "../components/ConfirmItem";
 
 const ConfirmOrder = () => {
+  const { cartItems, total } = useCart();
+
   return (
     <div className="flex p-10 gap-5 bg-gray-100">
       <div className="flex flex-col gap-5 w-full">
@@ -22,16 +24,17 @@ const ConfirmOrder = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-7 bg-white rounded-lg px-5 py-7 h-80">
+        <div className="flex flex-col gap-7 bg-white rounded-lg px-5 py-7 max-h-80">
           <h2 className="text-teal-800 font-bold text-xl">Review Items</h2>
           <div className="flex flex-col gap-3 text-teal-900 font-semibold no-scrollbar overflow-scroll">
-            {products.products.map((product) => (
+            {cartItems.map((product) => (
               <ConfirmItem
                 key={product.id}
-                thumbnail={product.thumbnail}
-                title={product.title}
-                weight={product.weight}
+                id={product.id}
+                image={product.image}
+                productName={product.productName}
                 price={product.price}
+                quantity={product.quantity}
               />
             ))}
           </div>
@@ -43,18 +46,18 @@ const ConfirmOrder = () => {
           <ul className="w-full flex flex-col gap-3">
             <li className="flex justify-between text-md text-slate-500 font-semibold">
               Subtotal:{" "}
-              <span className="text-teal-800 font-semibold">$37.65</span>
+              <span className="text-teal-800 font-semibold">${total}</span>
             </li>
             <li className="flex justify-between text-md text-slate-500 font-semibold">
               Delivery fee:{" "}
-              <span className="text-teal-800 font-semibold">$16.0</span>
+              <span className="text-teal-800 font-semibold">$16.00</span>
             </li>
             <li className="flex justify-between text-md text-slate-500 font-semibold">
               Coupon discount:
-              <span className="text-teal-800 font-semibold">$48.0</span>
+              <span className="text-teal-800 font-semibold">$2.00</span>
             </li>
             <li className="flex justify-between text-md text-slate-500 font-semibold">
-              Taxes: <span className="text-teal-800 font-semibold">$10.0</span>
+              Taxes: <span className="text-teal-800 font-semibold">$4.0</span>
             </li>
           </ul>
           <h3 className="flex justify-between text-teal-800 font-bold text-lg">

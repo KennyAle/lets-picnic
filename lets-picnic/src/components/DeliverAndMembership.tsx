@@ -11,7 +11,7 @@ const DeliverAndMembership = () => {
             <h2 className="text-cyan-200 text-xl font-extrabold tracking-tighter">Deliver by 12:15pm</h2>
             <h2 className="text-cyan-200 text-xl font-extrabold tracking-tighter">Fast and free</h2>
           </div>
-          <img src="https://placehold.jp/100x100.png" alt="" />
+          <img className="w-1/4 h-fit" src="https://freepngimg.com/thumb/gift/137894-birthday-polka-present-dot-free-download-png-hq.png" alt="" />
         </section>
         <section className="flex justify-around items-center bg-amber-800 rounded-2xl w-xl h-40">
           <div>
@@ -20,7 +20,7 @@ const DeliverAndMembership = () => {
             <h2 className="text-amber-400 text-xl font-extrabold tracking-tighter">discount using our</h2>
             <h2 className="text-amber-400 text-xl font-extrabold tracking-tighter">health card</h2>
           </div>
-          <img src="https://placehold.jp/100x100.png" alt="" />
+          <img className="w-1/4 h-fit" src="https://freepngimg.com/thumb/credit_card/25871-5-credit-card-free-download.png" alt="" />
         </section>
     </div>
   )

@@ -1,4 +1,4 @@
-import { FaBars, FaStore, FaShoppingCart } from "react-icons/fa";
+import { FaBars, FaShoppingCart } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import { TiFlash } from "react-icons/ti";
 import Cart from "./Cart";
@@ -13,6 +13,7 @@ import SearchResult from "./SearchResult";
 import { type Product } from "../types/product.types";
 import { useSession } from "@/contexts/SessionContext";
 import toast from "react-hot-toast";
+import { useCart } from "@/contexts/CartContext";
 
 const Nav = () => {
   const { cartRef } = useCartUI();
@@ -20,6 +21,7 @@ const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { user, logout } = useSession();
+  const { cartQuantity } = useCart();
 
   const onHomePage = () => {
     navigate("/");
@@ -61,6 +63,19 @@ const Nav = () => {
     setSearched(false);
   };
 
+  const [isBouncing, setIsBouncing] = useState(false);
+
+  useEffect(() => {
+    if (cartQuantity > 0) {
+      setIsBouncing(true);
+      const timeout = setTimeout(() => {
+        setIsBouncing(false);
+      }, 500);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [cartQuantity]);
+
   return (
     <>
       {/* Display search results */}
@@ -73,6 +88,7 @@ const Nav = () => {
         {isMenuOpen && <Menu />}
         {isMenuOpen && (
           <motion.div
+            key="menu-overlay"
             className="fixed top-16 z-100  bg-black w-screen h-screen"
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.7 }}
@@ -108,10 +124,14 @@ const Nav = () => {
             onClick={() => setIsMenuOpen((prev) => !prev)}
           />
           <h3
-            className="text-white flex justify-center items-center gap-1.5 cursor-pointer"
+            className="text-white font-bold tracking-tight flex justify-center items-center gap-1.5 cursor-pointer"
             onClick={onHomePage}
           >
-            <FaStore className="text-amber-300" />
+            <img
+              className="w-6 h-6"
+              src="https://freepngimg.com/thumb/emoji/64969-emoticon-symbol-face-facebook-whatsapp-emoji.png"
+              alt=""
+            />
             Let's Picnic
           </h3>
           <div className="flex justify-center items-center bg-white rounded-3xl relative">
@@ -137,8 +157,8 @@ const Nav = () => {
           </div>
         </div>
         <div className="flex justify-around items-center gap-3.5">
-          <TiFlash className="text-yellow-300" />
-          <p className="text-white text-sm tracking-tight">
+          <p className="flex items-center gap-1 text-white text-sm tracking-tight font-semibold">
+            <TiFlash className="text-yellow-300" />
             Order now and get it within{" "}
             <span className="text-yellow-200">15 min!</span>
           </p>
@@ -169,10 +189,17 @@ const Nav = () => {
           )}
           <div
             ref={cartRef}
-            className="flex justify-center items-center rounded-full bg-white w-9 h-9 hover:bg-neutral-400 cursor-pointer"
+            className="relative flex justify-center items-center rounded-full bg-white w-9 h-9 hover:bg-neutral-400 cursor-pointer"
             onClick={() => setIsCartOpen((prev) => !prev)}
           >
             <FaShoppingCart className="w-full text-teal-800" />
+            <motion.span
+              animate={isBouncing ? { scale: [1, 1.1, 1], y: [0, -3, 0] } : {}}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="flex items-center justify-center bg-orange-500 h-4.5 w-4.5 font-semibold tracking-tight absolute -top-1 -right-1 rounded-full text-[11px] text-white"
+            >
+              {cartQuantity}
+            </motion.span>
           </div>
         </div>
       </nav>

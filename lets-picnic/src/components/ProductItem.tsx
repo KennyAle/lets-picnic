@@ -6,7 +6,6 @@ import { useRef } from "react";
 const ProductItem = ({
   id,
   productName,
-  weight,
   image,
   price,
 }: Omit<Product, "quantity" | "description" | "category_name">) => {
@@ -66,18 +65,35 @@ const ProductItem = ({
   };
 
   return (
-    <div className="flex flex-col justify-center items-center p-4 rounded-lg bg-white">
-      <img ref={productRef} src={image} alt={productName} />
-      <h2 className="text-center text-green-900 font-semibold">
+    <div className="round-shape-item flex flex-col justify-center items-center p-2.5 rounded-2xl bg-white shadow-sm/5">
+      <div className="w-full p-2 h-36 flex justify-center items-center">
+        <img
+          ref={productRef}
+          src={image}
+          alt={productName}
+          className="w-full h-full object-cover"
+        />
+      </div>
+      <h2 className="text-center tracking-tight text-lg text-teal-900 font-bold mt-2">
         {productName}
       </h2>
-      <p className="text-green-900 font-bold text-2xl">${price.toFixed(2)}</p>
-      <button
-        onClick={handleAddToCart}
-        className="flex justify-center items-center bg-lime-50 w-full text-4xl"
-      >
-        +
-      </button>
+      <h3 className="font-semibold text-sm text-gray-500 tracking-tight">
+        Groceries
+      </h3>
+      <p className="flex text-teal-900 font-bold text-3xl">
+        {price < 10 ? `0${Math.floor(price)}` : Math.floor(price)}.
+        <span className="flex items-center text-base tracking-tight font-bold self-start">
+          {price.toFixed(2).split(".")[1]}$
+        </span>
+      </p>
+      <div className="h-15 round-shape-btn flex justify-center items-center bg-lime-100/50 mt-2 w-full text-4xl">
+        <button
+          className="w-full h-full cursor-pointer"
+          onClick={handleAddToCart}
+        >
+          +
+        </button>
+      </div>
     </div>
   );
 };
