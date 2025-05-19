@@ -30,7 +30,7 @@ const SearchResult = ({searched, searchResult}: ISearchResult) => {
             ))
           ):(
             <div className="flex w-screen justify-center items-center">
-                <img src="https://cdn.pixabay.com/photo/2015/03/25/13/04/page-not-found-688965_1280.png" alt="" />
+                <img src="images/img_sorry.png" alt="" />
             </div>
             
           )

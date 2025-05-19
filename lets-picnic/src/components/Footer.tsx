@@ -4,7 +4,7 @@ const Footer = () => {
       <div className="flex flex-col justify-between w-2/5">
         <div className="flex flex-col gap-3">
           <h2 className="flex items-center gap-2 tracking-tight font-bold text-2xl text-teal-800">
-            <img className="w-8 h-8" src="https://placehold.co/40x40" alt="" />
+            <img className="w-8 h-8" src="https://freepngimg.com/thumb/emoji/64969-emoticon-symbol-face-facebook-whatsapp-emoji.png" alt="" />
             Let's Picnic
           </h2>
           <p>
