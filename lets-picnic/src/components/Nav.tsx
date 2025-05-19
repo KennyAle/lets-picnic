@@ -103,7 +103,7 @@ const Nav = () => {
       <AnimatePresence>
         {isCartOpen && (
           <>
-            <Cart key="cart" />
+            <Cart key="cart" openCart={setIsCartOpen} />
             <motion.div
               key="cart-overlay"
               className="fixed top-16 z-100  bg-black w-screen h-screen"

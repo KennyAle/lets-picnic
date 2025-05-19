@@ -148,6 +148,7 @@ const ProductsList = ({ section, isCategoryPage }: ProductsListProps) => {
             ))
           : products.map(({ product }, index) => (
               <motion.div
+                key={product.id}
                 variants={fadeInAnimationVariants}
                 initial="initial"
                 whileInView="animate"

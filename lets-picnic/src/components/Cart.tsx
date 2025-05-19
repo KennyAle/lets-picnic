@@ -3,10 +3,13 @@ import ConfirmItem from "./ConfirmItem";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
-const Cart = () => {
+type Props = {
+  openCart: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const Cart = ({ openCart }: Props) => {
   const { cartItems, total } = useCart();
   console.log(cartItems);
-  
 
   return (
     <motion.div
@@ -16,7 +19,7 @@ const Cart = () => {
       exit={{ x: "100%" }}
       transition={{ duration: 0.4 }}
     >
-      <div className="flex flex-col gap-4 bg-white rounded-lg p-4 h-72">
+      <div className="flex flex-col gap-2 bg-white rounded-lg px-4 py-2 h-85">
         <h2 className="text-teal-800 font-bold text-xl">Review Items</h2>
         <div className="flex flex-col gap-3 text-teal-900 font-semibold no-scrollbar overflow-scroll">
           {cartItems.length > 0 ? (
@@ -41,7 +44,8 @@ const Cart = () => {
         </h3>
         <Link
           to="/order"
-          className="w-full bg-lime-300 text-center text-teal-950 font-semibold p-4 rounded-full text-md"
+          onClick={() => openCart(false)}
+          className="w-full bg-lime-300 text-center text-teal-950 tracking-tight font-semibold p-3 rounded-full text-base"
         >
           Check Order
         </Link>
