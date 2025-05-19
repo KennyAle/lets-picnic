@@ -55,41 +55,41 @@ const Footer = () => {
         <div className="flex flex-col gap-3.5">
           <h3 className="font-semibold">Department</h3>
           <ul className="flex flex-col gap-2 text-sm">
-            <li>Fashion</li>
-            <li>Frozen</li>
-            <li>Dairy</li>
-            <li>Vegetables</li>
-            <li>Meat & Fish</li>
-            <li>Grocery</li>
-            <li>Furniture</li>
-            <li>Beauty</li>
+            <li className="hover:underline opacity-80 hover:opacity-100 cursor-pointer">Fashion</li>
+            <li className="hover:underline opacity-80 hover:opacity-100 cursor-pointer">Frozen</li>
+            <li className="hover:underline opacity-80 hover:opacity-100 cursor-pointer">Dairy</li>
+            <li className="hover:underline opacity-80 hover:opacity-100 cursor-pointer">Vegetables</li>
+            <li className="hover:underline opacity-80 hover:opacity-100 cursor-pointer">Meat & Fish</li>
+            <li className="hover:underline opacity-80 hover:opacity-100 cursor-pointer">Grocery</li>
+            <li className="hover:underline opacity-80 hover:opacity-100 cursor-pointer">Furniture</li>
+            <li className="hover:underline opacity-80 hover:opacity-100 cursor-pointer">Beauty</li>
           </ul>
         </div>
         <div className="flex flex-col gap-3.5">
           <h3 className="font-semibold">About Us</h3>
           <ul className="flex flex-col gap-2 text-sm">
-            <li>About Let's Picnic</li>
-            <li>Careers</li>
-            <li>News & Blog</li>
-            <li>Help</li>
+            <li className="hover:underline opacity-80 hover:opacity-100 cursor-pointer">About Let's Picnic</li>
+            <li className="hover:underline opacity-80 hover:opacity-100 cursor-pointer">Careers</li>
+            <li className="hover:underline opacity-80 hover:opacity-100 cursor-pointer">News & Blog</li>
+            <li className="hover:underline opacity-80 hover:opacity-100 cursor-pointer">Help</li>
           </ul>
         </div>
         <div className="flex flex-col gap-3.5">
           <h3 className="font-semibold">Services</h3>
           <ul className="flex flex-col gap-2 text-sm">
-            <li>Gift Card</li>
-            <li>Mobile App</li>
-            <li>Shopping & Delivery</li>
-            <li>Order Pickup</li>
+            <li className="hover:underline opacity-80 hover:opacity-100 cursor-pointer">Gift Card</li>
+            <li className="hover:underline opacity-80 hover:opacity-100 cursor-pointer">Mobile App</li>
+            <li className="hover:underline opacity-80 hover:opacity-100 cursor-pointer">Shopping & Delivery</li>
+            <li className="hover:underline opacity-80 hover:opacity-100 cursor-pointer">Order Pickup</li>
           </ul>
         </div>
         <div className="flex flex-col gap-3.5">
           <h3 className="font-semibold">Help</h3>
           <ul className="flex flex-col gap-2 text-sm">
-            <li>Shopcart Help</li>
-            <li>Returns</li>
-            <li>Track Order</li>
-            <li>Contact Us</li>
+            <li className="hover:underline opacity-80 hover:opacity-100 cursor-pointer">Shopcart Help</li>
+            <li className="hover:underline opacity-80 hover:opacity-100 cursor-pointer">Returns</li>
+            <li className="hover:underline opacity-80 hover:opacity-100 cursor-pointer">Track Order</li>
+            <li className="hover:underline opacity-80 hover:opacity-100 cursor-pointer">Contact Us</li>
           </ul>
         </div>
       </div>
