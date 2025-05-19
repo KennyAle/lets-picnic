@@ -15,6 +15,10 @@ import { useSession } from "@/contexts/SessionContext";
 import toast from "react-hot-toast";
 import { useCart } from "@/contexts/CartContext";
 
+type ProductWrapper = {
+  product: Product;
+};
+
 const Nav = () => {
   const { cartRef } = useCartUI();
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -32,8 +36,8 @@ const Nav = () => {
 
   const [search, setSearch] = useState("");
   const [searched, setSearched] = useState(false);
-  const [searchResult, setSearchResult] = useState<Product[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
+  const [searchResult, setSearchResult] = useState<ProductWrapper[]>([]);
+  const [products, setProducts] = useState<ProductWrapper[]>([]);
   useEffect(() => {
     const getProducts = async () => {
       const res = await fetch(`http://localhost:3000/product`);
@@ -46,7 +50,7 @@ const Nav = () => {
   const handleSearch = () => {
     if (search) {
       const searchItems = products.filter((item) =>
-        item.productName.toLowerCase().includes(search.toLocaleLowerCase())
+        item.product.productName.toLowerCase().includes(search.toLocaleLowerCase())
       );
       setSearchResult(searchItems);
       setSearched(true);

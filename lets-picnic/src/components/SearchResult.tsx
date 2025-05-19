@@ -1,9 +1,13 @@
 import { type Product } from "../types/product.types"
-import {motion, AnimatePresence} from 'framer-motion'
+import {motion} from 'framer-motion'
+
+type ProductWrapper = {
+  product: Product;
+};
 
 export interface ISearchResult {
     searched: boolean,
-    searchResult: Product[]
+    searchResult: ProductWrapper[]
 }
 
 const SearchResult = ({searched, searchResult}: ISearchResult) => {
@@ -22,10 +26,10 @@ const SearchResult = ({searched, searchResult}: ISearchResult) => {
         {searched && (
           searchResult.length > 0 ? (
             searchResult.map(item => (
-            <div key={item.id} className="flex flex-col justify-center items-center p-4 rounded-lg">
-                <img src={item.image} alt={item.product_name} className="w-1/2"/>
-                <h2 className="text-center text-green-900 font-semibold">{item.product_name}</h2>
-                <p className="text-green-900 font-bold text-xl">${item.price.toFixed(2)}</p>
+            <div key={item.product.id} className="flex flex-col justify-center items-center p-4 rounded-lg">
+                <img src={item.product.image} alt={item.product.productName} className="w-1/2"/>
+                <h2 className="text-center text-green-900 font-semibold">{item.product.productName}</h2>
+                <p className="text-green-900 font-bold text-xl">${item.product.price.toFixed(2)}</p>
             </div>
             ))
           ):(

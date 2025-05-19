@@ -6,4 +6,13 @@ export type Product = {
     description: string
     category_name: string
     quantity: number
+    rating: number
+    sku: string
+    category: category
+}
+
+interface category {
+    categoryName: string,
+    categoryDescription: string,
+    categryImage: string
 }
