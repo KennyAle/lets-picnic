@@ -6,7 +6,6 @@ import { useRef } from "react";
 const ProductItem = ({
   id,
   productName,
-  weight,
   image,
   price,
 }: Omit<Product, "quantity" | "description" | "category_name">) => {
@@ -67,14 +66,22 @@ const ProductItem = ({
 
   return (
     <div className="flex flex-col justify-center items-center p-4 rounded-lg bg-white">
-      <img ref={productRef} src={image} alt={productName} />
-      <h2 className="text-center text-green-900 font-semibold">
+      <div className="w-full h-36 flex justify-center items-center">
+        <img
+          ref={productRef}
+          src={image}
+          alt={productName}
+          className="w-full h-full object-cover"
+        />
+      </div>
+      <h2 className="text-center tracking-tight text-lg text-teal-900 font-bold mt-2">
         {productName}
       </h2>
-      <p className="text-green-900 font-bold text-2xl">${price.toFixed(2)}</p>
+      <h3 className="font-semibold text-sm text-gray-500 tracking-tight">Groceries</h3>
+      <p className="text-teal-900 font-bold text-2xl">${price.toFixed(2)}</p>
       <button
         onClick={handleAddToCart}
-        className="flex justify-center items-center bg-lime-50 w-full text-4xl"
+        className="flex justify-center items-center bg-lime-50 mt-5 w-full text-4xl"
       >
         +
       </button>

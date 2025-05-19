@@ -20,11 +20,10 @@ const Cart = () => {
           {cartItems.length > 0 ? (
             cartItems.map((product) => (
               <ConfirmItem
-                key={product.id ? product.id : `product-${Math.random()}`}
+                key={product.id}
                 id={product.id}
                 image={product.image}
                 productName={product.productName}
-                weight={12}
                 price={product.price}
                 quantity={product.quantity}
               />

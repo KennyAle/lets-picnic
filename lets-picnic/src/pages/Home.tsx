@@ -15,13 +15,14 @@ function Home() {
       <Banner />
       <div className="flex flex-col bg-gray-100 gap-15 px-20">
         <Categories />
-        <ProductsList />
+        <ProductsList section="you-might-need" />
         <ProductDetails />
         <DiscountAndPromot />
-        <ProductsList />
+        <ProductsList  section="weekly-best" />
         <DeliverAndMembership />
-        <ProductsList />
+        <ProductsList section="most-selling" />
         <AppDownload />
+        <ProductsList section="just-for-you" />
       </div>
       <Experience />
     </>

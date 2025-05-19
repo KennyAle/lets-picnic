@@ -4,7 +4,7 @@ import type { Product } from "../types/product.types";
 type CartContextType = {
   cartItems: Product[];
   addToCart: (
-    item: Omit<Product, "quantity" | "description" | "category_name" | "weight">
+    item: Omit<Product, "quantity" | "description" | "category_name">
   ) => void;
   removeFromCart: (id: number) => void;
   clearCart: () => void;
@@ -25,7 +25,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<Product[]>([]);
 
   const addToCart = (
-    item: Omit<Product, "quantity" | "description" | "category_name" | "weight">
+    item: Omit<Product, "quantity" | "description" | "category_name">
   ) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((p) => p.id === item.id);
@@ -42,7 +42,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             quantity: 1,
             description: "",
             category_name: "",
-            weight: 0,
           },
         ];
       }
