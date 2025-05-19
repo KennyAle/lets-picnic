@@ -1,83 +1,98 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
-import { useForm } from "react-hook-form"
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { type Product } from "@/types/product.types";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { useForm } from "react-hook-form";
 
-interface Product {
-  id: number
-  product_name: string
-  price: number
-  image: string
-}
+type ProductWrapper = {
+  product: Product;
+};
+
+type FormData = {
+  productName: string;
+  categoryId: number;
+  price: number;
+  image: string;
+  description: string;
+  discountPercentage: number;
+  rating: number;
+  sku: string;
+};
 
 export function ProductsTable() {
-  const [products, setProducts] = useState<Product[]>([])
-  const [searchTerm, setSearchTerm] = useState("")
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [editProduct, setEditProduct] = useState<Product | null>(null)
+  const [products, setProducts] = useState<ProductWrapper[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { register, handleSubmit, reset } = useForm()
+  const { register, handleSubmit, reset } = useForm<FormData>();
 
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const response = await fetch("http://localhost:3000/product")
-        const data = await response.json()
-        setProducts(data)
+        const response = await fetch("http://localhost:3000/product");
+        const data = await response.json();
+        setProducts(data);
       } catch (error) {
-        console.error("Error fetching products:", error)
+        console.error("Error fetching products:", error);
       }
     }
-    fetchProducts()
-  }, [])
+    fetchProducts();
+  }, []);
 
-  const filteredProducts = products.filter(product =>
-    product.product_name.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  const openModal = () => {
+    reset();
+    setIsModalOpen(true);
+  };
 
-  const openModal = (product?: Product) => {
-    setEditProduct(product || null)
-    setIsModalOpen(true)
-    reset(product || {})
-  }
+  const closeModal = () => setIsModalOpen(false);
 
-  const closeModal = () => {
-    setIsModalOpen(false)
-    reset()
-  }
+  const onSubmit = async (data: FormData) => {
+    const payload = {
+      ...data,
+      discountPercentage: data.discountPercentage ?? 0,
+    };
 
-  const onSubmit = async (data: any) => {
-    const url = editProduct ? `http://localhost:3000/product/${editProduct.id}` : "http://localhost:3000/product"
-    const method = editProduct ? "PUT" : "POST"
+    console.log("Submitting data:", payload);
 
     try {
-      const response = await fetch(url, {
-        method,
+      const response = await fetch("http://localhost:3000/product", {
+        method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
-      })
-      if (!response.ok) throw new Error("Error")
-      closeModal()
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) throw new Error("Error adding product");
+
+      const updated = await response.json();
+      setProducts((prev) => [...prev, { product: updated }]); 
+
+      closeModal();
     } catch (error) {
-      console.error("Error saving product:", error)
+      console.error("Error adding product:", error);
     }
-  }
+  };
 
   return (
     <div className="w-full overflow-x-auto p-4">
       <div className="flex justify-between items-center mb-4">
-        <Input
+        <input
           placeholder="Search product..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-1/2"
+          className="w-1/2 border rounded px-2 py-1"
         />
-        <Button variant="default" onClick={() => openModal()}>Add Product</Button>
+        <Button onClick={openModal}>Add Product</Button>
       </div>
 
       <table className="min-w-full bg-white">
@@ -91,17 +106,25 @@ export function ProductsTable() {
           </tr>
         </thead>
         <tbody>
-          {filteredProducts.map((product) => (
+          {products.map(({ product }) => (
             <tr key={product.id} className="border-b">
               <td className="px-6 py-4">{product.id}</td>
               <td className="px-6 py-4">
-                <img src={product.image} alt={product.product_name} className="w-12 h-12 object-cover rounded" />
+                <img
+                  src={product.image}
+                  alt={product.productName}
+                  className="w-12 h-12 object-cover rounded"
+                />
               </td>
-              <td className="px-6 py-4">{product.product_name}</td>
+              <td className="px-6 py-4">{product.productName}</td>
               <td className="px-6 py-4">${product.price}</td>
               <td className="px-6 py-4 space-x-2">
-                <Button variant="outline" onClick={() => openModal(product)}>Edit</Button>
-                <Button variant="destructive">Delete</Button>
+                <Button variant="outline" disabled>
+                  Edit
+                </Button>
+                <Button variant="destructive" disabled>
+                  Delete
+                </Button>
               </td>
             </tr>
           ))}
@@ -109,25 +132,131 @@ export function ProductsTable() {
       </table>
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent>
+        <DialogContent className="max-w-sm mx-auto mt-10 max-h-[80vh] overflow-auto rounded-lg">
           <DialogHeader>
-            <DialogTitle>{editProduct ? "Edit Product" : "Add Product"}</DialogTitle>
+            <DialogTitle>Add Product</DialogTitle>
           </DialogHeader>
+
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <Input placeholder="Product Name" {...register("productName")} />
-            <Input placeholder="Price" type="number" {...register("price")} />
-            <Input placeholder="Image URL" {...register("image")} />
-            <Input placeholder="Description" {...register("description")} />
-            <Input placeholder="Discount Percentage" type="number" {...register("discountPercentage")} />
-            <Input placeholder="Rating" type="number" {...register("rating")} />
-            <Input placeholder="SKU" {...register("sku")} />
-            <Input placeholder="Category ID" type="number" {...register("categoryId")} />
+            <div>
+              <label htmlFor="productName" className="block mb-1 font-medium">
+                Product Name
+              </label>
+              <Input
+                id="productName"
+                {...register("productName", { required: true })}
+                placeholder="Product Name"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="categoryId" className="block mb-1 font-medium">
+                Category ID
+              </label>
+              <Input
+                id="categoryId"
+                {...register("categoryId", {
+                  valueAsNumber: true,
+                  required: true,
+                })}
+                placeholder="Category ID"
+                type="number"
+                min={1}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="rating" className="block mb-1 font-medium">
+                Rating
+              </label>
+              <Input
+                id="rating"
+                {...register("rating", {
+                  valueAsNumber: true,
+                  required: true,
+                })}
+                placeholder="Rating"
+                type="number"
+                step="0.1"
+                min={0}
+                max={5}
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="price" className="block mb-1 font-medium">
+                Price
+              </label>
+              <Input
+                id="price"
+                {...register("price", { valueAsNumber: true, required: true })}
+                placeholder="Price"
+                type="number"
+                step="0.01"
+                min={0}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="description" className="block mb-1 font-medium">
+                Description
+              </label>
+              <Input
+                id="description"
+                {...register("description", { required: true })}
+                placeholder="Description"
+                required
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="discountPercentage"
+                className="block mb-1 font-medium"
+              >
+                Discount Percentage
+              </label>
+              <Input
+                id="discountPercentage"
+                {...register("discountPercentage", {
+                  valueAsNumber: true,
+                  setValueAs: (value) => (value === "" ? 0 : parseFloat(value)),
+                })}
+                placeholder="Discount Percentage"
+                type="number"
+                step="0.01"
+                min={0}
+                max={100}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="image" className="block mb-1 font-medium">
+                Image URL
+              </label>
+              <Input
+                id="image"
+                {...register("image", { required: true })}
+                placeholder="Image URL"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="sku" className="block mb-1 font-medium">
+                SKU
+              </label>
+              <Input id="sku" {...register("sku")} placeholder="SKU" />
+            </div>
+
             <DialogFooter>
-              <Button type="submit">{editProduct ? "Update" : "Add"}</Button>
+              <Button type="submit">Add</Button>
             </DialogFooter>
           </form>
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }
