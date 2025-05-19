@@ -7,7 +7,7 @@ const ConfirmItem = ({
   productName,
   price,
   quantity,
-}: Omit<Product, "description" | "category_name">) => {
+}: Omit<Product, "description" | "category_name" | "rating" | "sku" | "category">) => {
   const { addToCart, removeFromCart } = useCart();
 
   return (
