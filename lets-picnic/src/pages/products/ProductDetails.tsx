@@ -39,7 +39,6 @@ const ProductDetails = () => {
         const res = await fetch(url);
         const data = await res.json();
         setProduct(data);
-        console.log(data);
       } catch (error) {
         console.error("Error fetching product:", error);
       }
@@ -49,65 +48,66 @@ const ProductDetails = () => {
   }, [id]);
 
   const handleAddToCart = () => {
-  if (!cartRect || !productRef.current) {
-    if (product) {
-      addToCart(product.product);
+    if (!cartRect || !productRef.current) {
+      if (product) {
+        addToCart(product.product);
+      }
+      return;
     }
-    return;
-  }
 
-  const productRect = productRef.current.getBoundingClientRect();
+    const productRect = productRef.current.getBoundingClientRect();
 
-  const scaleFactor = 0.5;
-  const initialWidth = productRect.width * scaleFactor;
-  const initialHeight = productRect.height * scaleFactor;
+    const scaleFactor = 0.5;
+    const initialWidth = productRect.width * scaleFactor;
+    const initialHeight = productRect.height * scaleFactor;
 
-  const deltaX =
-    cartRect.left +
-    cartRect.width / 2 -
-    (productRect.left + initialWidth / 2);
-  const deltaY =
-    cartRect.top +
-    cartRect.height / 2 -
-    (productRect.top + initialHeight / 2);
+    const deltaX =
+      cartRect.left +
+      cartRect.width / 2 -
+      (productRect.left + initialWidth / 2);
+    const deltaY =
+      cartRect.top +
+      cartRect.height / 2 -
+      (productRect.top + initialHeight / 2);
 
-  const clone = document.createElement("img");
-  clone.src = productRef.current.src;
-  clone.style.position = "fixed";
-  clone.style.left = `${productRect.left}px`;
-  clone.style.top = `${productRect.top}px`;
-  clone.style.width = `${initialWidth}px`;
-  clone.style.height = `${initialHeight}px`;
-  clone.style.pointerEvents = "none";
-  clone.style.zIndex = "1000";
-  document.body.appendChild(clone);
+    const clone = document.createElement("img");
+    clone.src = productRef.current.src;
+    clone.style.position = "fixed";
+    clone.style.left = `${productRect.left}px`;
+    clone.style.top = `${productRect.top}px`;
+    clone.style.width = `${initialWidth}px`;
+    clone.style.height = `${initialHeight}px`;
+    clone.style.pointerEvents = "none";
+    clone.style.zIndex = "1000";
+    document.body.appendChild(clone);
 
-  const animation = clone.animate(
-    [
-      { transform: "scale(1)", opacity: 1 },
+    const animation = clone.animate(
+      [
+        { transform: "scale(1)", opacity: 1 },
+        {
+          transform: `translate(${deltaX * 0.5}px, ${
+            deltaY * 0.5
+          }px) scale(0.7)`,
+          opacity: 0.8,
+        },
+        {
+          transform: `translate(${deltaX}px, ${deltaY}px) scale(0.2)`,
+          opacity: 0.5,
+        },
+      ],
       {
-        transform: `translate(${deltaX * 0.5}px, ${deltaY * 0.5}px) scale(0.7)`,
-        opacity: 0.8,
-      },
-      {
-        transform: `translate(${deltaX}px, ${deltaY}px) scale(0.2)`,
-        opacity: 0.5,
-      },
-    ],
-    {
-      duration: 800,
-      easing: "cubic-bezier(0.4, 0, 0.2, 1)",
-    }
-  );
+        duration: 800,
+        easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+      }
+    );
 
-  animation.onfinish = () => {
-    clone.remove();
-    if (product) {
-      addToCart(product.product);
-    }
+    animation.onfinish = () => {
+      clone.remove();
+      if (product) {
+        addToCart(product.product);
+      }
+    };
   };
-};
-
 
   return (
     <motion.div
@@ -119,9 +119,9 @@ const ProductDetails = () => {
           duration: 0.4,
         },
       }}
-      className="grid grid-cols-2 gap-10 rounded-3xl bg-white p-10 w-full relative"
+      className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 rounded-3xl bg-white p-6 md:p-10 w-full relative"
     >
-      {product?.product.rating ? (
+      {product?.product.discountPercentage ? (
         <motion.div
           initial={{ opacity: 0, scale: 0 }}
           whileInView={{
@@ -135,50 +135,54 @@ const ProductDetails = () => {
           viewport={{
             once: true,
           }}
-          className="leading-none absolute top-5 left-5 bg-sky-900 text-blue-100 rounded-full w-25 h-25 flex flex-col items-center justify-center"
+          className="leading-none absolute top-3 left-3 md:top-5 md:left-5 bg-sky-900 text-blue-100 rounded-full w-16 h-16 md:w-25 md:h-25 flex flex-col items-center justify-center"
         >
-          <p className="leading-none text-4xl font-semibold">
+          <p className="leading-none text-2xl md:text-4xl font-semibold">
             {product?.product.discountPercentage}
-            <span className="text-xl pl-0.5">%</span>
+            <span className="text-lg md:text-xl pl-0.5">%</span>
           </p>
-          <p className="opacity-80 leading-none uppercase pb-2 text-sm">
+          <p className="opacity-80 leading-none uppercase pb-1 md:pb-2 text-xs md:text-sm">
             Discount
           </p>
         </motion.div>
       ) : (
         ""
       )}
-      <div className="w-full bg-gray-100 rounded-3xl">
-        <img ref={productRef} src={product?.product.image} alt="" />
+      <div className="w-full bg-gray-100 rounded-3xl overflow-hidden">
+        <img
+          ref={productRef}
+          src={product?.product.image}
+          alt=""
+          className="w-full h-auto object-contain"
+        />
       </div>
       <div className="w-full flex flex-col gap-5">
-        <div className="flex flex-col gap-0.5">
-          <Timer />
-          {/* <h3 className="text-gray-500 text-sm font-semibold">Brand</h3> */}
+        <div className={`flex flex-col gap-0.5 ${product?.product.discountPercentage !== 0 ? "pt-3" : ""}`}>
+          {product?.product.discountPercentage ? <Timer /> : ""}
           <div className="flex flex-col gap-2">
             <Link
               to={`/products/product/${product?.product.id}`}
-              className="text-2xl text-green-900 tracking-tight font-bold hover:underline"
+              className="text-xl md:text-2xl text-green-900 tracking-tight font-bold hover:underline"
             >
               {product?.product.productName}
             </Link>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 text-sm md:text-base">
               <FaStar className="text-yellow-300" />
-              <p className="text-green-900 font-bold text-base tracking-tight">
+              <p className="text-green-900 font-bold tracking-tight">
                 {product?.product.rating} Rating
               </p>
               <p className="text-gray-400 font-semibold underline tracking-tight">
                 (15 reviews)
               </p>
             </div>
-            <div className="flex text-teal-900 font-bold text-3xl">
+            <div className="flex text-teal-900 font-bold text-2xl md:text-3xl">
               {product?.product?.price !== undefined ? (
                 <p className="flex tracking-tighter">
                   {product.product.price < 10
                     ? `0${Math.floor(product.product.price)}`
                     : Math.floor(product.product.price)}
                   .
-                  <span className="flex items-center text-base tracking-tight font-bold self-start">
+                  <span className="flex items-center text-sm md:text-base tracking-tight font-bold self-start">
                     {Number(product.product.price).toFixed(2).split(".")[1]}$
                   </span>
                 </p>
@@ -187,24 +191,24 @@ const ProductDetails = () => {
               )}
             </div>
           </div>
-          <div className="flex gap-2 mt-3">
+          <div className="flex flex-col sm:flex-row gap-2 mt-3">
             <button
               onClick={handleAddToCart}
-              className="flex gap-2 justify-center items-center bg-gray-200 text-teal-900 font-semibold text-sm py-2 px-6 rounded-4xl tracking-tight cursor-pointer"
+              className="flex gap-2 justify-center items-center bg-gray-200 text-teal-900 font-semibold text-sm py-2 px-6 rounded-4xl tracking-tight cursor-pointer w-full sm:w-auto"
             >
               <FaShoppingCart className="text-teal-900" />
               Add to cart
             </button>
-            <button className="flex gap-1 justify-center items-center bg-lime-300 text-teal-950 font-semibold text-sm py-2 px-6 rounded-4xl tracking-tight cursor-pointer">
+            <button className="flex gap-1 justify-center items-center bg-lime-300 text-teal-950 font-semibold text-sm py-2 px-6 rounded-4xl tracking-tight cursor-pointer w-full sm:w-auto">
               <MdOutlineShoppingCartCheckout />
               Buy now
             </button>
           </div>
           <div className="flex flex-col gap-3 mt-5 text-teal-900 font-semibold text-md">
-            <p className="text-gray-500 font-semibold">
+            <p className="text-gray-500 font-semibold text-sm md:text-md">
               {product?.product.description}
             </p>
-            <ul className="flex gap-1 text-gray-500 font-semibold">
+            <ul className="flex flex-wrap gap-1 text-gray-500 font-semibold text-sm md:text-md">
               <li>Categories:</li>
               <li className="underline capitalize">
                 {product?.product.category.categoryName},
@@ -213,16 +217,16 @@ const ProductDetails = () => {
                 {product?.product.category.categoryDescription}
               </li>
             </ul>
-            <p className="text-gray-500 font-semibold">
+            <p className="text-gray-500 font-semibold text-sm md:text-md">
               SKU: {product?.product.sku}
             </p>
-            <div className="flex items-center gap-1 underline">
+            <div className="flex items-center gap-1 underline text-sm md:text-md cursor-pointer">
               <FaRegHeart />
               <p>ADD TO WISHLIST</p>
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 text-sm md:text-md">
           <span className="flex gap-2 text-teal-800 font-bold">
             <FaCheck />
             In stock

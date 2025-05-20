@@ -16,7 +16,7 @@ const Menu = () => {
   }, []);
   return (
     <motion.div
-      className="fixed h-[calc(100vh-68px)] overflow-hidden top-16 left-0 z-1000 flex flex-col w-1/5 bg-teal-950 overflow-y-auto no-scrollbar"
+      className="fixed h-[calc(100vh-68px)] overflow-hidden top-16 left-0 z-1000 flex flex-col w-4/5 xs:w-3/5 sm:w-2/5 md:w-1/4 lg:w-1/5 bg-teal-950 overflow-y-auto no-scrollbar"
       initial={{ x: "-100%" }}
       animate={{ x: 0 }}
       exit={{ x: "-100%" }}

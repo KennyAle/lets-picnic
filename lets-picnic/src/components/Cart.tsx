@@ -13,7 +13,7 @@ const Cart = ({ openCart }: Props) => {
 
   return (
     <motion.div
-      className="fixed h-screen overflow-hidden top-16 right-0 z-1000 flex flex-col w-1/3 bg-white"
+      className="fixed h-screen overflow-hidden top-16 right-0 z-1000 flex flex-col w-full xs:w-4/5 sm:w-2/3 md:w-1/2 lg:w-1/3 bg-white"
       initial={{ x: "100%" }}
       animate={{ x: 0 }}
       exit={{ x: "100%" }}

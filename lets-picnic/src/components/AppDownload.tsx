@@ -19,8 +19,8 @@ const AppDownload = () => {
   return (
     <motion.div
       className="flex justify-around items-center overflow-hidden"
-      initial={{ opacity: 0, scale: 1.1 }}
-      whileInView={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, transformOrigin: "center center" }}
+      whileInView={{ opacity: 1 }}
       transition={{ duration: 0.3, ease: "easeIn" }}
       viewport={{ once: true }}
     >

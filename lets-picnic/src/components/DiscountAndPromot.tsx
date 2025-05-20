@@ -18,7 +18,7 @@ const item = {
 const DiscountAndPromot = () => {
   return (
     <motion.div
-      className="flex flex-col sm:flex-row sm:justify-between items-center gap-10"
+      className="overflow-hidden flex flex-col sm:flex-row sm:justify-between items-center gap-10"
       variants={container}
       initial="hidden"
       whileInView="show"

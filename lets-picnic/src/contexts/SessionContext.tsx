@@ -90,11 +90,10 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
         await fetchUserById(result.userId);
       }
     } catch (error) {
-      console.error("Session check error:", error);
+      // console.error("Session check error:", error);
     }
   };
 
-  //Check session on page load
   useEffect(() => {
     checkSession();
   }, []);

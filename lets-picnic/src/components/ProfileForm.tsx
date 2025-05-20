@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email address." }),
@@ -26,9 +27,19 @@ const loginSchema = z.object({
 });
 
 export function ProfileForm() {
-  const { login } = useSession();
+  const { user, login } = useSession();
+  const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (loggedIn && user) {
+      if (user.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate(-1);
+      }
+    }
+  }, [user, loggedIn]);
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -41,7 +52,7 @@ export function ProfileForm() {
     try {
       await login(values.email, values.password);
       toast.success("Login Successful");
-      setTimeout(() => navigate(-1), 1000);
+      setLoggedIn(true);
     } catch (error) {
       toast.error("Login failed");
     }

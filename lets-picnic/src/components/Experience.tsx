@@ -48,7 +48,7 @@ const Experience = () => {
         {[...Info, ...Info].map((item, index) => (
           <li
             key={index}
-            className="round-shape-top flex flex-col justify-end gap-8 w-1/5 h-full sm:h-fit mx-auto px-5 pt-8 bg-teal-950 text-lime-200 font-semibold text-xl"
+            className="round-shape-top flex flex-col justify-end gap-8 w-1/5 h-full sm:h-fit mx-auto px-5 pt-8 bg-[#003032] text-lime-200 font-semibold text-xl"
           >
             <h2 className="self-start w-2/3 ">{item.name}</h2>
             <img src={item.image} className="h-40 w-3/4 self-center object-contain" alt="" />

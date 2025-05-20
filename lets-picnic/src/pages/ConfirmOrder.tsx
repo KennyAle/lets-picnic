@@ -13,8 +13,8 @@ const ConfirmOrder = () => {
   const grandTotal = isEmpty ? 0 : total + deliveryFee + taxes - couponDiscount;
 
   return (
-    <div className="flex p-10 gap-5 bg-gray-100">
-      <div className="flex flex-col gap-5 w-full">
+    <div className="flex flex-col md:flex-row p-4 md:p-10 gap-5 bg-gray-100">
+      <div className="flex flex-col gap-5 w-full md:w-2/3">
         <div className="flex flex-col gap-7 bg-white rounded-lg px-5 py-7">
           <h2 className="text-teal-800 font-bold text-xl">
             Delivery Information
@@ -46,18 +46,18 @@ const ConfirmOrder = () => {
         </div>
       </div>
 
-      <div className="w-full">
+      <div className="w-full md:w-1/3">
         <div className="flex flex-col gap-7 bg-white rounded-lg px-5 py-7">
           <h2 className="text-teal-800 font-bold text-xl">Order summary</h2>
           <ul className="w-full flex flex-col gap-3">
             <li className="flex justify-between text-md text-slate-500 font-semibold">
-              Subtotal:{" "}
+              Subtotal:
               <span className="text-teal-800 font-semibold">
                 ${total.toFixed(2)}
               </span>
             </li>
             <li className="flex justify-between text-md text-slate-500 font-semibold">
-              Delivery fee:{" "}
+              Delivery fee:
               <span className="text-teal-800 font-semibold">
                 ${deliveryFee.toFixed(2)}
               </span>
@@ -69,14 +69,14 @@ const ConfirmOrder = () => {
               </span>
             </li>
             <li className="flex justify-between text-md text-slate-500 font-semibold">
-              Taxes:{" "}
+              Taxes:
               <span className="text-teal-800 font-semibold">
                 ${taxes.toFixed(2)}
               </span>
             </li>
           </ul>
           <h3 className="flex justify-between text-teal-800 font-bold text-lg">
-            Total:{" "}
+            Total:
             <span className="text-teal-800 font-bold">
               ${grandTotal.toFixed(2)}
             </span>
@@ -84,7 +84,9 @@ const ConfirmOrder = () => {
 
           <button
             className={`w-full ${
-              isEmpty ? "bg-gray-300 cursor-not-allowed" : "bg-lime-300 cursor-pointer"
+              isEmpty
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-lime-300 cursor-pointer"
             } text-teal-950 font-semibold p-4 rounded-full text-md`}
             disabled={isEmpty}
           >

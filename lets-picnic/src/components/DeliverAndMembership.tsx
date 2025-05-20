@@ -3,7 +3,7 @@ import { LuPackageCheck } from "react-icons/lu";
 
 const DeliverAndMembership = () => {
   return (
-    <div className="flex flex-col sm:flex-row sm:justify-around items-center gap-10">
+    <div className="overflow-hidden flex flex-col sm:flex-row sm:justify-around items-center gap-10">
         <section className="flex justify-around items-center bg-blue-900 rounded-2xl w-xs sm:w-xl h-40">
           <div>
             <label className="flex justify-center items-center gap-1 bg-cyan-200 rounded-xs font-bold text-xs w-28 h-5 text-blue-900 px-2 mb-3"><LuPackageCheck /> Free delivery</label>
