@@ -22,6 +22,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import toast from "react-hot-toast";
+import { useEffect, useRef } from "react";
+import autoAnimate from "@formkit/auto-animate";
 
 const signupSchema = z.object({
   firstName: z
@@ -54,6 +56,12 @@ export function SignupForm({ setShowLogin }: Props) {
       role: "customer",
     },
   });
+
+  const parent = useRef(null);
+
+  useEffect(() => {
+    parent.current && autoAnimate(parent.current);
+  }, []);
 
   async function onSubmit(values: z.infer<typeof signupSchema>) {
     try {
@@ -88,7 +96,7 @@ export function SignupForm({ setShowLogin }: Props) {
           control={form.control}
           name="firstName"
           render={({ field }) => (
-            <FormItem>
+            <FormItem ref={parent}>
               <FormLabel>First Name</FormLabel>
               <FormControl>
                 <Input placeholder="Enter your first name" {...field} />
@@ -102,7 +110,7 @@ export function SignupForm({ setShowLogin }: Props) {
           control={form.control}
           name="lastName"
           render={({ field }) => (
-            <FormItem>
+            <FormItem ref={parent}>
               <FormLabel>Last Name</FormLabel>
               <FormControl>
                 <Input placeholder="Enter your last name" {...field} />
@@ -116,7 +124,7 @@ export function SignupForm({ setShowLogin }: Props) {
           control={form.control}
           name="email"
           render={({ field }) => (
-            <FormItem>
+            <FormItem ref={parent}>
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input
@@ -172,7 +180,6 @@ export function SignupForm({ setShowLogin }: Props) {
             </FormItem>
           )}
         />
-
         <Button type="submit" className="w-full">
           Sign Up
         </Button>

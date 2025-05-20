@@ -17,7 +17,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import autoAnimate from "@formkit/auto-animate";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email address." }),
@@ -30,6 +31,11 @@ export function ProfileForm() {
   const { user, login } = useSession();
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const parent = useRef(null);
+  
+    useEffect(() => {
+      parent.current && autoAnimate(parent.current);
+    }, [parent.current]);
 
   useEffect(() => {
     if (loggedIn && user) {
@@ -68,7 +74,7 @@ export function ProfileForm() {
           control={form.control}
           name="email"
           render={({ field }) => (
-            <FormItem>
+            <FormItem ref={parent}>
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input placeholder="Enter your email" {...field} />
@@ -82,7 +88,7 @@ export function ProfileForm() {
           control={form.control}
           name="password"
           render={({ field }) => (
-            <FormItem>
+            <FormItem ref={parent}>
               <FormLabel>Password</FormLabel>
               <FormControl>
                 <Input

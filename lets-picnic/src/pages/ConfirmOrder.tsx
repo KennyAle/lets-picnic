@@ -1,9 +1,16 @@
 import { useCart } from "@/contexts/CartContext";
 import ConfirmItem from "../components/ConfirmItem";
 import { FaMapLocationDot } from "react-icons/fa6";
+import { useEffect, useRef } from "react";
+import autoAnimate from "@formkit/auto-animate";
 
 const ConfirmOrder = () => {
   const { cartItems, total } = useCart();
+  const parent = useRef(null);
+
+  useEffect(() => {
+    parent.current && autoAnimate(parent.current);
+  }, [parent.current]);
 
   const isEmpty = total === 0;
   const deliveryFee = isEmpty ? 0 : total < 50 ? 5 : 0;
@@ -29,9 +36,12 @@ const ConfirmOrder = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-7 bg-white rounded-lg px-5 py-7 max-h-80">
+        <div className="flex flex-col gap-7 bg-white rounded-lg px-5 py-7 max-h-120">
           <h2 className="text-teal-800 font-bold text-xl">Review Items</h2>
-          <div className="flex flex-col gap-3 text-teal-900 font-semibold no-scrollbar overflow-scroll">
+          <div
+            ref={parent}
+            className="flex flex-col gap-3 text-teal-900 font-semibold no-scrollbar overflow-scroll"
+          >
             {cartItems.map((product) => (
               <ConfirmItem
                 key={product.id}

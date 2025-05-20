@@ -2,6 +2,8 @@ import { useCart } from "../contexts/CartContext";
 import ConfirmItem from "./ConfirmItem";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import autoAnimate from "@formkit/auto-animate";
+import { useEffect, useRef } from "react";
 
 type Props = {
   openCart: React.Dispatch<React.SetStateAction<boolean>>;
@@ -9,7 +11,11 @@ type Props = {
 
 const Cart = ({ openCart }: Props) => {
   const { cartItems, total } = useCart();
-  console.log(cartItems);
+  const parent = useRef(null);
+
+  useEffect(() => {
+    parent.current && autoAnimate(parent.current);
+  }, [parent.current]);
 
   return (
     <motion.div
@@ -21,7 +27,10 @@ const Cart = ({ openCart }: Props) => {
     >
       <div className="flex flex-col gap-2 bg-white rounded-lg px-4 py-2 h-85">
         <h2 className="text-teal-800 font-bold text-xl">Review Items</h2>
-        <div className="flex flex-col gap-3 text-teal-900 font-semibold no-scrollbar overflow-scroll">
+        <div
+          ref={parent}
+          className="flex flex-col gap-3 text-teal-900 font-semibold no-scrollbar overflow-scroll"
+        >
           {cartItems.length > 0 ? (
             cartItems.map((product) => (
               <ConfirmItem
