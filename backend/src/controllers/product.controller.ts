@@ -64,7 +64,7 @@ const getProductsByCategoryId = async (req: Request, res: Response) => {
 // add product
 const addProduct = async (req: Request, res: Response) => {
   const { productName, categoryId, price, image, description, discountPercentage, rating, sku } = req.body
-  if (!productName || !categoryId || !price || !image || !description || !discountPercentage || !rating || !sku) {
+  if (!productName || !categoryId || !price || !image || !description || !rating || !sku) {
     res.status(400).json({ error: "Missing required fields" });
     return
   }
