@@ -9,12 +9,12 @@ const Login = () => {
 
   return (
     <div className="flex flex-col lg:flex-row rounded-3xl bg-white gap-5 m-4 lg:m-10 overflow-hidden min-h-screen">
-      <div className="bg-teal-950 w-full lg:w-1/2 flex flex-col justify-center items-center p-6 sm:p-10 pb-0">
+      <div className="bg-teal-950 w-full lg:w-1/2 flex flex-col justify-center items-center md:pb-0 p-6 sm:p-10 pb-0">
         <div className="flex flex-col h-full justify-evenly items-center text-center gap-4">
           <h1 className="text-white text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tighter">
             We bring the store to your door
           </h1>
-          <p className="text-base text-slate-300 tracking-tight w-4/5 font-semibold">
+          <p className="text-base md:text-lg text-gray-200 tracking-tight w-4/5 font-bold">
             Get organic produce and sustainably sourced groceries delivery at up
             to 4% off grocery.
           </p>
