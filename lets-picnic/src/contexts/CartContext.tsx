@@ -3,9 +3,7 @@ import type { Product } from "../types/product.types";
 
 type CartContextType = {
   cartItems: Partial<Product>[];
-  addToCart: (
-    item: Partial<Product>
-  ) => void;
+  addToCart: (item: Partial<Product>) => void;
   removeFromCart: (id: number) => void;
   clearCart: () => void;
   total: number;
@@ -25,11 +23,12 @@ export const useCart = () => {
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<Partial<Product>[]>([]);
 
-  const cartQuantity = cartItems.reduce((acc, item) => acc + (item.quantity || 0), 0);
+  const cartQuantity = cartItems.reduce(
+    (acc, item) => acc + (item.quantity || 0),
+    0
+  );
 
-  const addToCart = (
-    item: Partial<Product>
-  ) => {
+  const addToCart = (item: Partial<Product>) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((p) => p.id === item.id);
 
@@ -65,9 +64,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
       if (!existingItem) return prev;
 
-      if (existingItem.quantity || 0 > 1) {
+      if ((existingItem.quantity || 0) > 1) {
         return prev.map((p) =>
-          p.id === id ? { ...p, quantity: p.quantity || 0 - 1 } : p
+          p.id === id ? { ...p, quantity: (p.quantity || 0) - 1 } : p
         );
       }
 

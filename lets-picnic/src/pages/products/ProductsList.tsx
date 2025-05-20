@@ -30,11 +30,21 @@ const fadeInAnimationVariants = {
 
 const ProductsList = ({ section, isCategoryPage }: ProductsListProps) => {
   const [products, setProducts] = useState<ProductWrapper[]>([]);
+  const [forceShow, setForceShow] = useState(false);
   const [loading, setLoading] = useState(true);
   const { categoryParam } = useParams<{ categoryParam: string }>();
 
   const categoryId = categoryParam?.split("-")[0];
   const categoryName = categoryParam?.split("-")[1];
+
+  useEffect(() => {
+    if (isCategoryPage) {
+      const timeout = setTimeout(() => {
+        setForceShow(true);
+      }, 300);
+      return () => clearTimeout(timeout);
+    }
+  }, [isCategoryPage]);
 
   const getProducts = async () => {
     setLoading(true);
@@ -125,10 +135,9 @@ const ProductsList = ({ section, isCategoryPage }: ProductsListProps) => {
     <motion.div
       variants={fadeInAnimationVariants}
       initial="initial"
-      whileInView="animate"
-      viewport={{
-        once: true,
-      }}
+      {...(forceShow
+        ? { animate: "animate" }
+        : { whileInView: "animate", viewport: { once: true } })}
       className={containerStyles}
     >
       <h2 className="text-3xl normal-case font-bold tracking-tight mb-4 text-teal-900">
@@ -153,10 +162,9 @@ const ProductsList = ({ section, isCategoryPage }: ProductsListProps) => {
                 key={product.id}
                 variants={fadeInAnimationVariants}
                 initial="initial"
-                whileInView="animate"
-                viewport={{
-                  once: true,
-                }}
+                {...(forceShow
+                  ? { animate: "animate" }
+                  : { whileInView: "animate", viewport: { once: true } })}
                 custom={index}
               >
                 <ProductItem

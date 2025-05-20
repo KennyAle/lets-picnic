@@ -138,7 +138,7 @@ const ProductDetails = () => {
           className="leading-none absolute top-5 left-5 bg-sky-900 text-blue-100 rounded-full w-25 h-25 flex flex-col items-center justify-center"
         >
           <p className="leading-none text-4xl font-semibold">
-            {product?.product.rating}
+            {product?.product.discountPercentage}
             <span className="text-xl pl-0.5">%</span>
           </p>
           <p className="opacity-80 leading-none uppercase pb-2 text-sm">

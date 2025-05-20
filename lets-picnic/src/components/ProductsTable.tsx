@@ -10,8 +10,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { useForm } from "react-hook-form";
+import { useSession } from "@/contexts/SessionContext";
 
 type ProductWrapper = {
   product: Product;
@@ -29,6 +31,7 @@ type FormData = {
 };
 
 export function ProductsTable() {
+  const { user } = useSession();
   const [products, setProducts] = useState<ProductWrapper[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,6 +40,14 @@ export function ProductsTable() {
   const [productToDelete, setProductToDelete] = useState<Product | null>(null);
 
   const { register, handleSubmit, reset } = useForm<FormData>();
+
+  if (!user) {
+    return <p className="p-4">Please log in to view this page.</p>;
+  }
+
+  if (user.role !== "admin") {
+    return <p className="p-4 text-red-600">Access denied. Admins only.</p>;
+  }
 
   useEffect(() => {
     fetchProducts();
@@ -67,14 +78,14 @@ export function ProductsTable() {
       });
     } else {
       reset({
-        productName: '',
+        productName: "",
         categoryId: 1,
         price: 0,
-        image: '',
-        description: '',
+        image: "",
+        description: "",
         discountPercentage: 0,
         rating: 0,
-        sku: '',
+        sku: "",
       });
     }
     setIsModalOpen(true);
@@ -83,9 +94,12 @@ export function ProductsTable() {
   const closeModal = () => setIsModalOpen(false);
 
   const onSubmit = async (data: FormData) => {
+    const rating = parseFloat(data.rating.toString());
+
     const payload = {
       ...data,
       discountPercentage: data.discountPercentage ?? 0,
+      rating: parseFloat(rating.toFixed(2)),
     };
 
     console.log("Submitting data:", payload);
@@ -153,7 +167,7 @@ export function ProductsTable() {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="w-1/2 border rounded px-2 py-1"
         />
-      <Button onClick={() => openModal(null)}>Add Product</Button>
+        <Button onClick={() => openModal(null)}>Add Product</Button>
       </div>
 
       <table className="min-w-full bg-white">
@@ -167,34 +181,42 @@ export function ProductsTable() {
           </tr>
         </thead>
         <tbody>
-          {products.map(({ product }) => (
-            <tr key={product.id} className="border-b">
-              <td className="px-6 py-4">{product.id}</td>
-              <td className="px-6 py-4">
-                <img
-                  src={product.image}
-                  alt={product.productName}
-                  className="w-12 h-12 object-cover rounded"
-                />
-              </td>
-              <td className="px-6 py-4">{product.productName}</td>
-              <td className="px-6 py-4">${product.price}</td>
-              <td className="px-6 py-4 space-x-2">
-                <Button variant="outline" onClick={() => openModal(product)}>
-                  Edit
-                </Button>
-                <Button
-                  variant="destructive"
-                  onClick={() => {
-                    setProductToDelete(product); // 削除する商品をセット
-                    setIsConfirmDialogOpen(true); // 確認ダイアログを開く
-                  }}
-                >
-                  Delete
-                </Button>
-              </td>
-            </tr>
-          ))}
+          {products
+            .filter(({ product }) =>
+              product.productName
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase())
+            )
+            .map(({ product }) => (
+              <tr key={product.id} className="border-b">
+                <td className="px-6 py-4">{product.id}</td>
+                <td className="px-6 py-4">
+                  <img
+                    src={product.image}
+                    alt={product.productName}
+                    className="w-12 h-12 object-cover rounded"
+                  />
+                </td>
+                <td className="px-6 py-4">{product.productName}</td>
+                <td className="px-6 py-4">
+                  ${Number(product.price).toFixed(2)}
+                </td>
+                <td className="px-6 py-4 space-x-2">
+                  <Button variant="outline" onClick={() => openModal(product)}>
+                    Edit
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    onClick={() => {
+                      setProductToDelete(product); // 削除する商品をセット
+                      setIsConfirmDialogOpen(true); // 確認ダイアログを開く
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
 
@@ -202,9 +224,16 @@ export function ProductsTable() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Confirm Deletion</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete this product? This action cannot
+              be undone.
+            </DialogDescription>
           </DialogHeader>
+
           <DialogFooter>
-            <Button onClick={() => setIsConfirmDialogOpen(false)}>Cancel</Button>
+            <Button onClick={() => setIsConfirmDialogOpen(false)}>
+              Cancel
+            </Button>
             <Button variant="destructive" onClick={handleDelete}>
               Delete
             </Button>
@@ -215,7 +244,14 @@ export function ProductsTable() {
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="max-w-sm mx-auto mt-10 max-h-[80vh] overflow-auto rounded-lg">
           <DialogHeader>
-          <DialogTitle>{selectedProduct ? "Edit Product" : "Add Product"}</DialogTitle>
+            <DialogTitle>
+              {selectedProduct ? "Edit Product" : "Add Product"}
+            </DialogTitle>
+            <DialogDescription>
+              {selectedProduct
+                ? "Update the product information below."
+                : "Fill in the product details to add a new product."}
+            </DialogDescription>
           </DialogHeader>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -253,16 +289,17 @@ export function ProductsTable() {
               </label>
               <Input
                 id="rating"
+                type="text"
+                placeholder="Rating (1.00 - 5.00)"
+                pattern="^(5(\.0{1,2})?|[1-4](\.\d{1,2})?)$"
                 {...register("rating", {
-                  valueAsNumber: true,
                   required: true,
+                  pattern: {
+                    value: /^(5(\.0{1,2})?|[1-4](\.\d{1,2})?)$/,
+                    message:
+                      "Rating must be a number between 1.00 and 5.00 with up to 2 decimals",
+                  },
                 })}
-                placeholder="Rating"
-                type="number"
-                step="0.1"
-                min={0}
-                max={5}
-                required
               />
             </div>
 
@@ -274,7 +311,7 @@ export function ProductsTable() {
                 id="price"
                 {...register("price", { valueAsNumber: true, required: true })}
                 placeholder="Price"
-                type="number"
+                type="text"
                 step="0.01"
                 min={0}
                 required
@@ -306,8 +343,7 @@ export function ProductsTable() {
                   setValueAs: (value) => (value === "" ? 0 : parseFloat(value)),
                 })}
                 placeholder="Discount Percentage"
-                type="number"
-                step="0.01"
+                type="text"
                 min={0}
                 max={100}
               />
@@ -333,7 +369,9 @@ export function ProductsTable() {
             </div>
 
             <DialogFooter>
-              <Button type="submit">{selectedProduct ? "Update" : "Add"}</Button>
+              <Button type="submit">
+                {selectedProduct ? "Update" : "Add"}
+              </Button>
             </DialogFooter>
           </form>
         </DialogContent>
