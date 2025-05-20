@@ -9,7 +9,7 @@ const ProductItem = ({
   productName,
   image,
   price,
-}: Omit<Product, "quantity" | "description" | "category_name" | "rating" | "sku" | "category">) => {
+}: Partial<Product>) => {
   const { addToCart } = useCart();
   const { cartRect } = useCartUI();
   const productRef = useRef<HTMLImageElement>(null);
@@ -32,7 +32,7 @@ const ProductItem = ({
       (productRect.top + productRect.height / 2);
 
     const clone = document.createElement("img");
-    clone.src = image;
+    clone.src = image ?? "";
     clone.style.position = "fixed";
     clone.style.left = `${productRect.left}px`;
     clone.style.top = `${productRect.top}px`;
@@ -65,6 +65,8 @@ const ProductItem = ({
     };
   };
 
+  if(!price){price = 0.00}
+
   return (
     <div className="round-shape-item flex flex-col justify-center items-center p-2.5 rounded-2xl bg-white shadow-sm/5">
       <Link to={`/products/product/${id}`} className="w-full p-2 h-36 flex justify-center items-center">
@@ -84,7 +86,7 @@ const ProductItem = ({
       <p className="flex text-teal-900 font-bold text-3xl">
         {price < 10 ? `0${Math.floor(price)}` : Math.floor(price)}.
         <span className="flex items-center text-base tracking-tight font-bold self-start">
-          {price.toFixed(2).split(".")[1]}$
+          {Number(price).toFixed(2).split(".")[1]}$
         </span>
       </p>
       <div className="h-15 round-shape-btn flex justify-center items-center bg-lime-100/50 mt-2 w-full text-4xl">

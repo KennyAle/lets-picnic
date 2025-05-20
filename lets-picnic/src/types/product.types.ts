@@ -9,6 +9,7 @@ export type Product = {
     sku: string
     categoryId: number
     category: category
+    category_name: string
     quantity:number // not recommend having this here, quantity should be in the cart-item
 }
 

@@ -179,7 +179,7 @@ const ProductDetails = () => {
                     : Math.floor(product.product.price)}
                   .
                   <span className="flex items-center text-base tracking-tight font-bold self-start">
-                    {product.product.price.toFixed(2).split(".")[1]}$
+                    {Number(product.product.price).toFixed(2).split(".")[1]}$
                   </span>
                 </p>
               ) : (

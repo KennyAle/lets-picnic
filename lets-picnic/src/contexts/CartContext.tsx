@@ -2,17 +2,9 @@ import { createContext, useContext, useState, type ReactNode } from "react";
 import type { Product } from "../types/product.types";
 
 type CartContextType = {
-  cartItems: Product[];
+  cartItems: Partial<Product>[];
   addToCart: (
-    item: Omit<
-      Product,
-      | "quantity"
-      | "description"
-      | "category_name"
-      | "rating"
-      | "sku"
-      | "category"
-    >
+    item: Partial<Product>
   ) => void;
   removeFromCart: (id: number) => void;
   clearCart: () => void;
@@ -31,27 +23,19 @@ export const useCart = () => {
 };
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cartItems, setCartItems] = useState<Product[]>([]);
+  const [cartItems, setCartItems] = useState<Partial<Product>[]>([]);
 
-  const cartQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+  const cartQuantity = cartItems.reduce((acc, item) => acc + (item.quantity || 0), 0);
 
   const addToCart = (
-    item: Omit<
-      Product,
-      | "quantity"
-      | "description"
-      | "category_name"
-      | "rating"
-      | "sku"
-      | "category"
-    >
+    item: Partial<Product>
   ) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((p) => p.id === item.id);
 
       if (existingItem) {
         return prevItems.map((p) =>
-          p.id === item.id ? { ...p, quantity: p.quantity + 1 } : p
+          p.id === item.id ? { ...p, quantity: (p.quantity || 0) + 1 } : p
         );
       } else {
         return [
@@ -81,9 +65,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
       if (!existingItem) return prev;
 
-      if (existingItem.quantity > 1) {
+      if (existingItem.quantity || 0 > 1) {
         return prev.map((p) =>
-          p.id === id ? { ...p, quantity: p.quantity - 1 } : p
+          p.id === id ? { ...p, quantity: p.quantity || 0 - 1 } : p
         );
       }
 
@@ -96,7 +80,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const total = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+    (acc, item) => acc + (item.price || 0) * (item.quantity || 0),
     0
   );
 

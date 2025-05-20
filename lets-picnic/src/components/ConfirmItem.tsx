@@ -7,7 +7,7 @@ const ConfirmItem = ({
   productName,
   price,
   quantity,
-}: Omit<Product, "description" | "category_name" | "rating" | "sku" | "category">) => {
+}: Partial<Product>) => {
   const { addToCart, removeFromCart } = useCart();
 
   return (
@@ -26,7 +26,7 @@ const ConfirmItem = ({
         </button>
         <span className="text-2xl">{quantity}</span>
         <button
-          onClick={() => removeFromCart(id)}
+          onClick={() => removeFromCart(Number(id))}
           className="border-2 border-teal-900 rounded-full flex justify-center items-center w-8 h-8 text-md"
         >
           -
