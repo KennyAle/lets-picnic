@@ -8,7 +8,7 @@ import React, {
 } from "react";
 
 interface CartUIContextType {
-  cartRef: React.RefObject<HTMLDivElement>;
+  cartRef: React.RefObject<HTMLDivElement | null>;
   cartRect: DOMRect | null;
 }
 
