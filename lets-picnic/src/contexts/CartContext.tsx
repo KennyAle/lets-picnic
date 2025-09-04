@@ -55,7 +55,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         ];
       }
     });
-    console.log(cartItems);
   };
 
   const removeFromCart = (id: number) => {
