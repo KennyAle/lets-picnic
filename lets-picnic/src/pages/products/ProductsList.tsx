@@ -3,6 +3,7 @@ import type { Product } from "../../types/product.types";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import ProductItem from "@/components/ProductItem";
+const API_URL = import.meta.env.VITE_API_URL;
 
 type ProductWrapper = {
   product: Product;
@@ -49,7 +50,7 @@ const ProductsList = ({ section, isCategoryPage }: ProductsListProps) => {
   const getProducts = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:3000/product");
+      const res = await fetch(`${API_URL}/product`);
       const data = await res.json();
       setTimeout(() => {
         setProducts(data);
@@ -65,7 +66,7 @@ const ProductsList = ({ section, isCategoryPage }: ProductsListProps) => {
     setLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:3000/product/category/${category}`
+        `${API_URL}/product/category/${category}`
       );
       const data = await res.json();
       setTimeout(() => {

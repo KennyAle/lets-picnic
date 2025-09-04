@@ -24,6 +24,7 @@ import {
 import toast from "react-hot-toast";
 import { useEffect, useRef } from "react";
 import autoAnimate from "@formkit/auto-animate";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const signupSchema = z.object({
   firstName: z
@@ -65,7 +66,7 @@ export function SignupForm({ setShowLogin }: Props) {
 
   async function onSubmit(values: z.infer<typeof signupSchema>) {
     try {
-      const response = await fetch("http://localhost:3000/user/signup", {
+      const response = await fetch(`${API_URL}/user/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -3,12 +3,13 @@ import type { Category } from "../types/category.types";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa6";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Categories = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   useEffect(() => {
     const getCategories = async () => {
-      const res = await fetch("http://localhost:3000/category");
+      const res = await fetch(`${API_URL}/category`);
       const data = await res.json();
       setCategories(data);
     };

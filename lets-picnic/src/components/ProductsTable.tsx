@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { useForm } from "react-hook-form";
 import { useSession } from "@/contexts/SessionContext";
+const API_URL = import.meta.env.VITE_API_URL;
 
 type ProductWrapper = {
   product: Product;
@@ -55,7 +56,7 @@ export function ProductsTable() {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch("http://localhost:3000/product");
+      const response = await fetch(`${API_URL}/product`);
       const data = await response.json();
       setProducts(data);
     } catch (error) {
@@ -108,7 +109,7 @@ export function ProductsTable() {
       let response;
       if (selectedProduct) {
         response = await fetch(
-          `http://localhost:3000/product/${selectedProduct.id}`,
+          `${API_URL}/product/${selectedProduct.id}`,
           {
             method: "PUT",
             headers: {
@@ -118,7 +119,7 @@ export function ProductsTable() {
           }
         );
       } else {
-        response = await fetch("http://localhost:3000/product", {
+        response = await fetch(`${API_URL}/product`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -142,7 +143,7 @@ export function ProductsTable() {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/product/${productToDelete.id}`,
+        `${API_URL}/product/${productToDelete.id}`,
         {
           method: "DELETE",
         }

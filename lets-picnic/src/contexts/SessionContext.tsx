@@ -7,6 +7,7 @@ import {
   type ReactNode,
   useEffect,
 } from "react";
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface User {
   id: number;
@@ -32,7 +33,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchUserById = async (userId: number) => {
     try {
-      const response = await fetch(`http://localhost:3000/user/${userId}`);
+      const response = await fetch(`${API_URL}/user/${userId}`);
       if (!response.ok) throw new Error("Failed to fetch user data");
       const userData: User = await response.json();
       setUser(userData);
@@ -43,7 +44,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await fetch("http://localhost:3000/user/login", {
+      const response = await fetch(`${API_URL}/user/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -67,7 +68,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = async () => {
     try {
-      const response = await fetch("http://localhost:3000/user/logout", {
+      const response = await fetch(`${API_URL}/user/logout`, {
         method: "GET",
         credentials: "include",
       });
@@ -81,7 +82,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 
   const checkSession = async () => {
     try {
-      const response = await fetch("http://localhost:3000/user/check-cookie", {
+      const response = await fetch(`${API_URL}/user/check-cookie`, {
         method: "GET",
         credentials: "include",
       });

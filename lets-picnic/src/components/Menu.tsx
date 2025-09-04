@@ -2,13 +2,14 @@ import type { Category } from "@/types/category.types";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Menu = () => {
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
     const getCategories = async () => {
-      const res = await fetch("http://localhost:3000/category");
+      const res = await fetch(`${API_URL}/category`);
       const data = await res.json();
       setCategories(data);
     };

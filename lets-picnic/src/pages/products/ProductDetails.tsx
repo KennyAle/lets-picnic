@@ -7,6 +7,7 @@ import { Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useCart } from "@/contexts/CartContext";
 import { useCartUI } from "@/contexts/CartUIContext";
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface productWrapper {
   product: Product;
@@ -21,10 +22,10 @@ const ProductDetails = () => {
   useEffect(() => {
     const getProduct = async () => {
       try {
-        let url = `http://localhost:3000/product/${id}`;
+        let url = `${API_URL}/product/${id}`;
 
         if (!id) {
-          const res = await fetch("http://localhost:3000/product");
+          const res = await fetch(`${API_URL}/product`);
           const products = await res.json();
 
           const firstProductWithRating = products.find(

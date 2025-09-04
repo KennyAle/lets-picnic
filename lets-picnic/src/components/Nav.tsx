@@ -14,6 +14,7 @@ import { type Product } from "../types/product.types";
 import { useSession } from "@/contexts/SessionContext";
 import toast from "react-hot-toast";
 import { useCart } from "@/contexts/CartContext";
+const API_URL = import.meta.env.VITE_API_URL;
 
 type ProductWrapper = {
   product: Product;
@@ -40,7 +41,7 @@ const Nav = () => {
   const [products, setProducts] = useState<ProductWrapper[]>([]);
   useEffect(() => {
     const getProducts = async () => {
-      const res = await fetch(`http://localhost:3000/product`);
+      const res = await fetch(`${API_URL}/product`);
       const data = await res.json();
       setProducts(data);
     };
