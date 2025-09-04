@@ -13,7 +13,7 @@ const app = express()
 
 // Middleware
 app.use(cors({
-  origin: "https://lets-go-picnic.onrender.com/", // React port
+  origin: "https://lets-go-picnic.onrender.com", // React port
   credentials: true // allow cookie transfer
 }))
 app.use(express.json());
